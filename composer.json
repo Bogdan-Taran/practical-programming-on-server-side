@@ -1,0 +1,23 @@
+{
+    "name": "bogdan-taran/practical-programming-on-server-side",
+    "description": "A learning project to teach programming in php",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bogdan-Taran",
+            "email": "taranbogdan9.2@mail.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php": "^7.4 | ^8.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Src\\": "core/Src/",
+        "": "app/"
+      }
+    }
+
+}
