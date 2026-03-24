@@ -1,6 +1,10 @@
 <?php
 //Включаем запрет на неявное преобразование типов
 declare(strict_types=1);
+// чтобы выплёвывал ошибки
+ini_set("error_reporting", E_ALL);
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
 
 try {
     //Создаем экземпляр приложения и запускаем его
