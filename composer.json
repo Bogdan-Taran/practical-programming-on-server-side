@@ -3,6 +3,11 @@
     "description": "A learning project to teach programming in php",
     "type": "project",
     "license": "MIT",
+    "config": {
+      "platform": {
+        "php": "8.3"
+      }
+    },
     "authors": [
         {
             "name": "Bogdan-Taran",
@@ -12,8 +17,8 @@
     "minimum-stability": "dev",
     "require": {
       "php": "^7.4 | ^8.0",
-        "illuminate/database": "9.x-dev",
-        "illuminate/events": "9.x-dev"
+        "illuminate/database": "12.x-dev",
+        "illuminate/events": "12.x-dev"
     },
     "autoload": {
       "psr-4": {

@@ -1,7 +1,9 @@
 <?php
 return [
     'driver' => 'mysql',
-    'host' => 'localhost',
+    'host' => 'MySQL-8.0',
+    'port' => '3306',
+//    'host' => 'localhost',
     'database' => 'mvc',
     'username' => 'root',
     'password' => '',
