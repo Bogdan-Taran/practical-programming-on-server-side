@@ -9,6 +9,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 use Src\Auth\Auth;
 class Site
 {
+    private User $model;
+
+    public function __construct()
+    {
+        $this->model = new User();
+    }
     public function index(): string
     {
         $posts = Post::all();
@@ -43,10 +49,21 @@ class Site
 
     public function signup(Request $request): string
     {
-        if ($request->method==='POST' && User::create($request->all())){
-            app()->route->redirect('/go');
+        $userExists = $this->model->checkUserExists($request[1]);
+        if($userExists){
+            return new View('site.signup', ['message' => 'Такой логин уже есть']);
+        }
+        else{
+            if ($request->method==='POST' && User::create($request -> all())) {
+                app()->route->redirect('/go');
+                return new View('site.signup', ['message' => 'Успешная рега']);
+            }
         }
         return new View('site.signup');
+
+    }
+    public function registrationUser(Request $request): string{
+        return User::create($request -> all());
     }
 
 }
