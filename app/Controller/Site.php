@@ -2,6 +2,7 @@
 namespace Controller;
 
 use Src\View;
+use Illuminate\Database\Capsule\Manager as DB;
 class Site
 {
     public function index(): string
