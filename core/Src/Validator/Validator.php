@@ -73,3 +73,4 @@ class Validator
         return (bool)count($this->errors);
     }
 }
+

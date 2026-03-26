@@ -1,13 +1,12 @@
 <?php
 namespace Controller;
 
-use Src\Request;
-use Src\View;
 use Model\Post;
 use Model\User;
-use Illuminate\Database\Capsule\Manager as DB;
 use Src\Auth\Auth;
+use Src\Request;
 use Src\Validator\Validator;
+use Src\View;
 
 class Site
 {
@@ -63,8 +62,10 @@ class Site
             ]);
 
             if($validator->fails()){
-                return new View('site.signup',
-                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                return new View('site.signup', [
+                    'errors' => $validator->errors(),
+                    'message' => 'Ошибка валидации'
+                ]);
             }
 
             if (User::create($request->all())) {
@@ -72,11 +73,6 @@ class Site
             }
         }
         return new View('site.signup');
-    }
-
-
-    public function registrationUser(Request $request): string{
-        return User::create($request -> all());
     }
 
 }

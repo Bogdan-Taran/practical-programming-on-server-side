@@ -23,8 +23,10 @@
     },
     "autoload": {
       "psr-4": {
-        "Src\\": "core/Src/",
-        "": "app/"
+        "Src\\": "core/Src",
+        "": "app/",
+        "Model\\": "app/Model/",
+        "Controller\\": "app/Controller/"
       }
     }
 
