@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\Auth\IdentityInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Src\Request;
 
 class User extends Model implements IdentityInterface
 {
@@ -41,12 +42,5 @@ class User extends Model implements IdentityInterface
             'password' => md5($credentials['password'])])->first();
 
     }
-    
-    public function checkUserExists(string $login) : bool{
-        $userExists = User::where('login', $login)->exists();
-        if($userExists){
-            return true;
-        }
-        return false;
-    }
+
 }

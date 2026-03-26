@@ -7,6 +7,8 @@ use Model\Post;
 use Model\User;
 use Illuminate\Database\Capsule\Manager as DB;
 use Src\Auth\Auth;
+use Src\Validator\Validator;
+
 class Site
 {
     private User $model;
@@ -49,19 +51,30 @@ class Site
 
     public function signup(Request $request): string
     {
-        $userExists = $this->model->checkUserExists($request[1]);
-        if($userExists){
-            return new View('site.signup', ['message' => 'Такой логин уже есть']);
-        }
-        else{
-            if ($request->method==='POST' && User::create($request -> all())) {
-                app()->route->redirect('/go');
-                return new View('site.signup', ['message' => 'Успешная рега']);
+        if ($request->method === 'POST') {
+
+            $validator = new Validator($request->all(), [
+                'name' => ['required'],
+                'login' => ['required', 'unique:users,login'],
+                'password' => ['required']
+            ], [
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально'
+            ]);
+
+            if($validator->fails()){
+                return new View('site.signup',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+            }
+
+            if (User::create($request->all())) {
+                app()->route->redirect('/login');
             }
         }
         return new View('site.signup');
-
     }
+
+
     public function registrationUser(Request $request): string{
         return User::create($request -> all());
     }
