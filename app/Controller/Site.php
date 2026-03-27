@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Model\AcademicDegree;
 use Model\Post;
 use Model\User;
 use Src\Auth\Auth;
@@ -53,14 +54,17 @@ class Site
         if ($request->method === 'POST') {
 
             $validator = new Validator($request->all(), [
-                'name' => ['required'],
+                'firstname' => ['required'],
+                'lastname' => ['required'],
+                'patronymic' => ['required'],
                 'login' => ['required', 'unique:users,login'],
-                'password' => ['required']
+                'password' => ['required'],
+                'academic_degree_id' => ['required']
             ], [
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
             ]);
-
+            
             if($validator->fails()){
                 return new View('site.signup', [
                     'errors' => $validator->errors(),
@@ -68,7 +72,13 @@ class Site
                 ]);
             }
 
-            if (User::create($request->all())) {
+            $data = $request->all();
+
+            // Переименовываем ключ пароля для соответствия полю в БД
+            $data['password_hash'] = $data['password'];
+
+
+            if (User::create($data)) {
                 app()->route->redirect('/login');
             }
         }

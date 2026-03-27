@@ -4,7 +4,7 @@ return [
     'host' => 'MySQL-8.0',
     'port' => '3306',
 //    'host' => 'localhost',
-    'database' => 'mvc',
+    'database' => 'poss_mvc_db',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',

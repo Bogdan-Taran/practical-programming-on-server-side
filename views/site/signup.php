@@ -1,8 +1,20 @@
-<h2>Регистрация нового пользователя</h2>
-<h3><?= $message ?? ''; ?></h3>
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/style_signup.css">
+    <title>Decan</title>
+</head>
+<body>
+<div class="container-signup">
+
+<h3 class="message"><?= $message ?? ''; ?></h3>
 
 <?php if (!empty($errors)): ?>
-    <ul>
+    <ul class="errors">
         <?php foreach ($errors as $field => $fieldErrors): ?>
             <?php foreach ($fieldErrors as $error): ?>
                 <li><?= $error ?></li>
@@ -10,10 +22,48 @@
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
-
 <form method="post">
-    <label>Имя <input type="text" name="name"></label>
-    <label>Логин <input type="text" name="login"></label>
-    <label>Пароль <input type="password" name="password"></label>
+    <h1>Регистрация нового пользователя</h1>
+    <div class="form-group">
+        <input type="text" name="lastname" placeholder=" " value="<?= $_POST['lastname'] ?? '' ?>">
+        <label>Фамилия</label>
+    </div>
+    <div class="form-group">
+        <input type="text" name="firstname" placeholder=" " value="<?= $_POST['firstname'] ?? '' ?>">
+        <label>Имя</label>
+    </div>
+    <div class="form-group">
+        <input type="text" name="patronymic" placeholder=" " value="<?= $_POST['patronymic'] ?? '' ?>">
+        <label>Отчество</label>
+    </div>
+    <div class="form-group">
+        <input type="text" name="login" placeholder=" " value="<?= $_POST['login'] ?? '' ?>">
+        <label>Логин</label>
+    </div>
+    <div class="form-group">
+        <input type="password" name="password" placeholder=" ">
+        <label>Пароль</label>
+    </div>
+    <div class="form-group">
+        <select name="role_id" required>
+            <option value="" disabled selected></option>
+            <option value="1">Руководитель</option>
+            <option value="2">Научный сотрудник</option>
+        </select>
+        <label>Роль</label>
+    </div>
+    <div class="form-group">
+        <select name="academic_degree_id" required>
+            <option value="" disabled selected></option>
+            <option value="1">Кандидат наук </option>
+            <option value="2">Доктор наук</option>
+            <option value="3">Доцент</option>
+            <option value="3">Профессор</option>
+        </select>
+        <label>Роль</label>
+    </div>
     <button>Зарегистрироваться</button>
 </form>
+</div>
+</body>
+</html>

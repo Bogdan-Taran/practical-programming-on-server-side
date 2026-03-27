@@ -136,3 +136,8 @@ CREATE TABLE scientific_publications(
 	REFERENCES students(student_id)
 	ON DELETE RESTRICT
 ) ENGINE=InnoDB;
+
+INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('1', 'Кандидат наук');
+INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('2', 'Доктор наук');
+INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('3', 'Доцент');
+INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('4', 'Профессор');

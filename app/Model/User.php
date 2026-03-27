@@ -13,22 +13,25 @@ class User extends Model implements IdentityInterface
 
     public $timestamps = false;
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
+        'patronymic',
         'login',
-        'password'
+        'password_hash',
+        'role_id',
+        'academic_degree_id'
     ];
 
     protected static function booted()
     {
-        static::created(function ($user) {
-            $user->password = md5($user->password);
-            $user->save();
+        static::creating(function ($user) {
+            $user->password_hash = md5($user->password_hash);
         });
     }
 
     public function findIdentity(int $id)
     {
-        return self::where('id', $id)->first();
+        return self::where('user_id', $id)->first();
     }
 
     public function getId(): int
@@ -39,7 +42,7 @@ class User extends Model implements IdentityInterface
     public function attemptIdentity(array $credentials)
     {
         return self::where(['login' => $credentials['login'],
-            'password' => md5($credentials['password'])])->first();
+            'password_hash' => md5($credentials['password'])])->first();
 
     }
 
