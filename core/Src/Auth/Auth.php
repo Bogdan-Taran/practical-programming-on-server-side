@@ -21,7 +21,7 @@ class Auth
     public static function login(IdentityInterface $user): void
     {
         self::$user = $user;
-        Session::set('id', self::$user->getId());
+        Session::set('user_id', self::$user->getId());
     }
 
     //Аутентификация пользователя и вход по учетным данным

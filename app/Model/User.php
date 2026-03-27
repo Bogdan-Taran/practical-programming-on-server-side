@@ -36,7 +36,7 @@ class User extends Model implements IdentityInterface
 
     public function getId(): int
     {
-        return $this->id;
+        return $this->user_id;
     }
 
     public function attemptIdentity(array $credentials)
