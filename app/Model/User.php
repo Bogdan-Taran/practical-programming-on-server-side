@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\Auth\IdentityInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Src\Request;
 
 class User extends Model implements IdentityInterface
@@ -31,6 +32,11 @@ class User extends Model implements IdentityInterface
         static::creating(function ($user) {
             $user->password_hash = md5($user->password_hash);
         });
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(UserRole::class, 'role_id', 'user_role_id');
     }
 
     public function findIdentity(int $id)

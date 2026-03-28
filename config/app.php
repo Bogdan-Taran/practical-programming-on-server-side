@@ -6,6 +6,7 @@ return [
     'identity'=>\Model\User::class,
     'routeMiddleware' => [
         'auth' => \Middlewares\AuthMiddleware::class,
+        'admin' => \Middlewares\AdminMiddleware::class,
     ],
     'validators' => [
         'required' => \Validators\RequireValidator::class,

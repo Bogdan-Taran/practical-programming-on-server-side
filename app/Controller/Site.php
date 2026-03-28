@@ -98,4 +98,10 @@ class Site
         return new View('site.signup');
     }
 
+    public function adminPanel(): string
+    {
+        $users = User::all();
+        return new View('site.admin_panel', ['users' => $users]);
+    }
+
 }

@@ -30,21 +30,33 @@ class Middleware
         $this->middlewareCollector = new RouteCollector(new Std(), new MarkBased());
     }
 
-    //Запуск всех middlewares для текущего маршрута
-    public function runMiddlewares(string $httpMethod, string $uri): Request
+    // Запуск всех middlewares для текущего маршрута
+    public function go(string $httpMethod, string $uri, Request $request): Request
     {
-        $request = new Request();
-        //Получаем список всех разрешенных классов middlewares из настроек приложения
+        // Получаем список всех разрешенных классов middlewares из настроек приложения
         $routeMiddleware = app()->settings->app['routeMiddleware'];
+        $middlewares = $this->getMiddlewaresForRoute($httpMethod, $uri);
 
-        //Перебираем все middlewares для текущего адреса
-        foreach ($this->getMiddlewaresForRoute($httpMethod, $uri) as $middleware) {
-            $args = explode(':', $middleware);
-            //Создаем объект и вызываем метод handle
-            (new $routeMiddleware[$args[0]])->handle($request, $args[1]?? null);
-        }
-        //Возвращаем итоговый request
-        return $request;
+        // Создаем конвейер (pipeline)
+        $pipeline = array_reduce(
+            array_reverse($middlewares), // Идем с конца, чтобы вкладывать один в другой
+            function ($next, $middlewareName) use ($routeMiddleware) {
+                return function (Request $request) use ($next, $middlewareName, $routeMiddleware) {
+                    $args = explode(':', $middlewareName);
+                    $middlewareClass = $routeMiddleware[$args[0]];
+                    $middleware = new $middlewareClass;
+                    // Вызываем handle, передавая запрос и следующий шаг ($next)
+                    return $middleware->handle($request, $next);
+                };
+            },
+            // Самый последний "next" - это пустая функция, которая просто возвращает запрос
+            function (Request $request) {
+                return $request;
+            }
+        );
+
+        // Запускаем конвейер с начальным запросом
+        return $pipeline($request);
     }
 
     //Поиск middlewares по адресу
