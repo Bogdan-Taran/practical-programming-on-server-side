@@ -11,8 +11,6 @@
 <body>
 <div class="form-container">
 
-
-
 <form method="post">
     <h1>Регистрация нового пользователя</h1>
     <h3 class="message"><?= $message ?? ''; ?></h3>

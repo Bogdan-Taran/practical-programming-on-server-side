@@ -141,3 +141,13 @@ INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VA
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('2', 'Доктор наук');
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('3', 'Доцент');
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('4', 'Профессор');
+
+INSERT INTO `users_roles` (`user_role_id`, `role_name`) VALUES ('1', 'Научный руководитель');
+INSERT INTO `users_roles` (`user_role_id`, `role_name`) VALUES ('2', 'Научный сотрудник');
+INSERT INTO `users_roles` (`user_role_id`, `role_name`) VALUES ('3', 'Администратор');
+
+INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('1','Естественные науки');
+INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('2','Медицинские науки');
+INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('3','Технические науки');
+INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('4','Сельскохозяйственные науки');
+INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('5','Социальные и гуманитарные науки');

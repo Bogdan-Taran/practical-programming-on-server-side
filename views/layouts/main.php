@@ -22,7 +22,10 @@
         <?php
         else:
             ?>
-            <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->name ?>)</a>
+            <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->firstname ?>)</a>
+            <?php if (app()->auth::user()->role_id === \Model\User::ROLE_ADMIN): ?>
+                <a href="#">Админ-панель</a>
+            <?php endif; ?>
         <?php
         endif;
         ?>
