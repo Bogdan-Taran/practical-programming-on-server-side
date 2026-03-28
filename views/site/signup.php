@@ -11,25 +11,17 @@
 <body>
 <div class="form-container">
 
-<h3 class="message"><?= $message ?? ''; ?></h3>
 
-<?php if (!empty($errors)): ?>
-    <ul class="errors">
-        <?php foreach ($errors as $field => $fieldErrors): ?>
-            <?php foreach ($fieldErrors as $error): ?>
-                <li><?= $error ?></li>
-            <?php endforeach; ?>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+
 <form method="post">
     <h1>Регистрация нового пользователя</h1>
+    <h3 class="message"><?= $message ?? ''; ?></h3>
     <div class="form-group">
-        <input type="text" name="lastname" placeholder=" " value="<?= $_POST['lastname'] ?? '' ?>">
+        <input type="text" required name="lastname" placeholder=" " value="<?= $_POST['lastname'] ?? '' ?>">
         <label>Фамилия</label>
     </div>
     <div class="form-group">
-        <input type="text" name="firstname" placeholder=" " value="<?= $_POST['firstname'] ?? '' ?>">
+        <input type="text" required name="firstname" placeholder=" " value="<?= $_POST['firstname'] ?? '' ?>">
         <label>Имя</label>
     </div>
     <div class="form-group">
@@ -37,11 +29,11 @@
         <label>Отчество</label>
     </div>
     <div class="form-group">
-        <input type="text" name="login" placeholder=" " value="<?= $_POST['login'] ?? '' ?>">
+        <input type="text" required name="login" placeholder=" " value="<?= $_POST['login'] ?? '' ?>">
         <label>Логин</label>
     </div>
     <div class="form-group">
-        <input type="password" name="password" placeholder=" ">
+        <input type="password" required name="password" placeholder=" ">
         <label>Пароль</label>
     </div>
     <div class="form-group">
@@ -60,9 +52,19 @@
             <option value="3">Доцент</option>
             <option value="3">Профессор</option>
         </select>
-        <label>Роль</label>
+        <label>Ученая степень</label>
     </div>
+    <?php if (!empty($errors)): ?>
+        <ul class="errors">
+            <?php foreach ($errors as $field => $fieldErrors): ?>
+                <?php foreach ($fieldErrors as $error): ?>
+                    <li><?= $error ?></li>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
     <button>Зарегистрироваться</button>
+
 </form>
 </div>
 </body>

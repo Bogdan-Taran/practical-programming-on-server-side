@@ -31,16 +31,24 @@ class Site
 
     public function login(Request $request): string
     {
+        // Проверяем наличие флеш-сообщения
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $message = $_SESSION['success_message'] ?? null;
+        unset($_SESSION['success_message']);
+
         //Если просто обращение к странице, то отобразить форму
         if ($request->method === 'GET') {
-            return new View('site.login');
+            return new View('site.login', ['message' => $message]);
         }
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
             app()->route->redirect('/hello');
         }
         //Если аутентификация не удалась, то сообщение об ошибке
-        return new View('site.login', ['message' => 'Неправильные логин или пароль']);
+        $message = 'Неправильные логин или пароль';
+        return new View('site.login', ['message' => $message, 'error' => true]);
     }
 
     public function logout(): void
@@ -79,6 +87,11 @@ class Site
 
 
             if (User::create($data)) {
+                // Устанавливаем флеш-сообщение
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION['success_message'] = 'Вы успешно зарегистрированы!';
                 app()->route->redirect('/login');
             }
         }
