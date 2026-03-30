@@ -6,16 +6,21 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/style_general.css">
+    <link rel="stylesheet" href="/css/style_admin_panel.css">
     <title>Decan</title>
 </head>
 <body>
-<main>
-    <div class="container-admin">
+<main class="main-container-admin">
+    <div class="add-user-container">
+    <button class="add-user-button">+ Добавить аспиранта</button>
+    <button class="add-user-button">+ Добавить науч.рука</button>
+    </div>
+<div class="admin-panel-container">
     <h1>Админ-панель: управление пользователями</h1>
+    <p>Здесь будут сортировки</p>
     <table>
         <thead>
         <tr>
-            <th>ID</th>
             <th>ФИО</th>
             <th>Логин</th>
             <th>Роль</th>
@@ -24,7 +29,6 @@
         <tbody>
         <?php foreach ($users as $user): ?>
             <tr>
-                <td><?= $user->user_id ?></td>
                 <td><?= $user->lastname ?> <?= $user->firstname ?> <?= $user->patronymic ?></td>
                 <td><?= $user->login ?></td>
                 <td><?= $user->role->role_name ?></td>
@@ -32,7 +36,7 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-    </div>
+</div>
 </main>
 </body>
 </html>
