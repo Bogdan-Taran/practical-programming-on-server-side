@@ -104,4 +104,9 @@ class Site
         return new View('site.admin_panel', ['users' => $users]);
     }
 
+    public function redirectToHello(): void
+    {
+        app()->route->redirect('/hello');
+    }
+
 }
