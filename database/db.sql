@@ -151,3 +151,29 @@ INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES
 INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('3','Технические науки');
 INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('4','Сельскохозяйственные науки');
 INSERT INTO `bak_speciality` (`bak_speciality_id`, `bak_speciality_name`) VALUES ('5','Социальные и гуманитарные науки');
+
+INSERT INTO `student_specializations` (`specialization_id`, `specialization_name`) VALUES ('1', 'Математика и механика');
+INSERT INTO `student_specializations` (`specialization_id`, `specialization_name`) VALUES ('2', 'Компьютерные и информационные науки');
+INSERT INTO `student_specializations` (`specialization_id`, `specialization_name`) VALUES ('3', 'Физика и астрономия');
+INSERT INTO `student_specializations` (`specialization_id`, `specialization_name`) VALUES ('4', 'Химические науки');
+INSERT INTO `student_specializations` (`specialization_id`, `specialization_name`) VALUES ('5', 'Науки о Земле');
+INSERT INTO `student_specializations` (`specialization_id`, `specialization_name`) VALUES ('6', 'Биологические науки');
+
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('1', 'к123');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('2', 'м512');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('3', 'а301');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('4', 'б402');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('5', 'и101');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('6', 'ф202');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('7', 'х303');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('8', 'б404');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('9', 'м505');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('10', 'т606');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('11', 'э707');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('12', 'ю808');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('13', 'л909');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('14', 'п111');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('15', 'с222');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('16', 'д333');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('17', 'к444');
+INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('18', 'в555');

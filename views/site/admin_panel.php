@@ -12,31 +12,47 @@
 <body>
 <main class="main-container-admin">
     <div class="add-user-container">
-    <button class="add-user-button">+ Добавить аспиранта</button>
-    <button class="add-user-button">+ Добавить науч.рука</button>
+        <button class="add-user-button" id="addUserButton">+ Добавить пользователя</button>
     </div>
-<div class="admin-panel-container">
-    <h1>Админ-панель: управление пользователями</h1>
-    <p>Здесь будут сортировки</p>
-    <table>
-        <thead>
-        <tr>
-            <th>ФИО</th>
-            <th>Логин</th>
-            <th>Роль</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($users as $user): ?>
+    <div class="admin-panel-container">
+        <h1>Админ-панель: управление пользователями</h1>
+        <p>Здесь будут сортировки</p>
+        <table>
+            <thead>
             <tr>
-                <td><?= $user->lastname ?> <?= $user->firstname ?> <?= $user->patronymic ?></td>
-                <td><?= $user->login ?></td>
-                <td><?= $user->role->role_name ?></td>
+                <th>ФИО</th>
+                <th>Логин</th>
+                <th>Роль</th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            <?php foreach ($users as $user): ?>
+                <tr>
+                    <td><?= $user->lastname ?> <?= $user->firstname ?> <?= $user->patronymic ?></td>
+                    <td><?= $user->login ?></td>
+                    <td><?= $user->role->role_name ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </main>
+
+<?php include 'add_user.php'; ?>
+
+<script>
+    const addUserModal = document.getElementById('addUserModal');
+    const addUserButton = document.getElementById('addUserButton');
+    const closeButton = document.querySelector('.close');
+
+    addUserButton.onclick = () => addUserModal.style.display = 'block';
+    closeButton.onclick = () => addUserModal.style.display = 'none';
+
+    window.onclick = (event) => {
+        if (event.target === addUserModal) {
+            addUserModal.style.display = 'none';
+        }
+    };
+</script>
 </body>
 </html>
