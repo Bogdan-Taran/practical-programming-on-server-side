@@ -28,7 +28,7 @@
             </div>
         <?php endif; ?>
 
-        <form id="addUserForm" method="post" action="">
+        <form id="addUserForm" method="POST" action="/addStudent">
             <h1>Добавить студента</h1>
             <div class="form-group">
                 <input type="text" name="firstname" required placeholder=" " value="<?= $_POST['firstname'] ?? '' ?>">
