@@ -11,6 +11,9 @@
 </head>
 <body>
 <main class="main-container-admin">
+    <div id="popup-message" class="popup <?= isset($message) && !isset($error) ? 'show success' : '' ?> <?= isset($error) && $error ? 'show error' : '' ?>">
+        <?= $message ?? '' ?>
+    </div>
     <div class="add-user-container">
 <!--        <button class="add-user-button" id="addUserButton">+ Добавить пользователя</button>-->
         <a class="add-user-link" href="<?= app()->route->getUrl('/addScientificSupervisor') ?>">+ Добавить научрука</a>
@@ -41,19 +44,22 @@
 </main>
 
 
-<!--<script>-->
-<!--    const addUserModal = document.getElementById('addUserModal');-->
-<!--    const addUserButton = document.getElementById('addUserButton');-->
-<!--    const closeButton = document.querySelector('.close');-->
-<!---->
-<!--    addUserButton.onclick = () => addUserModal.style.display = 'block';-->
-<!--    closeButton.onclick = () => addUserModal.style.display = 'none';-->
-<!---->
-<!--    window.onclick = (event) => {-->
-<!--        if (event.target === addUserModal) {-->
-<!--            addUserModal.style.display = 'none';-->
-<!--        }-->
-<!--    };-->
-<!--</script>-->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const popup = document.getElementById('popup-message');
+        if (popup && popup.classList.contains('show')) {
+            // Если это сообщение об успехе, скрыть через 3 секунды
+            if (popup.classList.contains('success')) {
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }if (popup.classList.contains('error')) {
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+        }
+    });
+</script>
 </body>
 </html>

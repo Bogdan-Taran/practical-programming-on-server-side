@@ -101,8 +101,17 @@ class Site
 
     public function adminPanel(): string
     {
+        // Проверяем наличие флеш-сообщения
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $message = $_SESSION['success_message'] ?? null;
+        unset($_SESSION['success_message']);
+        $error = $_SESSION['error_message'] ?? null; // Если есть сообщения об ошибках
+        unset($_SESSION['error_message']);
+
         $users = User::all();
-        return new View('site.admin_panel', ['users' => $users]);
+        return new View('site.admin_panel', ['users' => $users, 'message' => $message, 'error' => $error]);
     }
 
 

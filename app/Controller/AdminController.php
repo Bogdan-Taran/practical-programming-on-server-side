@@ -154,7 +154,13 @@ class AdminController extends Site
                 $user->role_id = User::ROLE_SUPERVISOR; // Scientific Supervisor role
                 $user->academic_degree_id = $academic_degree_id;
                 $user->save();
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION['success_message'] = 'Научный руководитель успешно зарегистрирован!';
                 $success = true;
+                app()->route->redirect('/admin');
+                return ''; // Прекращаем выполнение после редиректа
             }
         }
 
@@ -210,8 +216,13 @@ class AdminController extends Site
                 $student->scientific_supervisor_id = $scientific_supervisor_id;
 
                 $student->save();
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
                 $success = true;
-                echo 'Зарегали студента';
+                $_SESSION['success_message'] = 'Студент успешно зарегистрирован';
+                app()->route->redirect('/admin');
+                return '';
             }
         }
 
