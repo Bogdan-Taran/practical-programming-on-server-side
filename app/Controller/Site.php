@@ -3,6 +3,7 @@ namespace Controller;
 
 use Model\AcademicDegree;
 use Model\Post;
+use Model\Student;
 use Model\User;
 use Src\Auth\Auth;
 use Src\Request;
@@ -111,7 +112,13 @@ class Site
         unset($_SESSION['error_message']);
 
         $users = User::all();
-        return new View('site.admin_panel', ['users' => $users, 'message' => $message, 'error' => $error]);
+        $students = Student::all();
+        return new View('site.admin_panel', [
+            'users' => $users,
+            'message' => $message,
+            'error' => $error,
+            'students' => $students
+        ]);
     }
 
 

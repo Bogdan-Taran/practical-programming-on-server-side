@@ -38,6 +38,13 @@
                     <td><?= $user->role->role_name ?></td>
                 </tr>
             <?php endforeach; ?>
+            <?php foreach ($students as $student): ?>
+                <tr>
+                    <td><?= $student->lastname ?> <?= $student->firstname ?> <?= $student->patronymic ?></td>
+                    <td> - </td>
+                    <td>Студент</td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
