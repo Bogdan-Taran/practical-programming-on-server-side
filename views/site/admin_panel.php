@@ -14,13 +14,14 @@
     <div id="popup-message" class="popup <?= isset($message) && !isset($error) ? 'show success' : '' ?> <?= isset($error) && $error ? 'show error' : '' ?>">
         <?= $message ?? '' ?>
     </div>
-    <div class="add-user-container">
-<!--        <button class="add-user-button" id="addUserButton">+ Добавить пользователя</button>-->
-        <a class="add-user-link" href="<?= app()->route->getUrl('/addScientificSupervisor') ?>">+ Добавить научрука</a>
-        <a class="add-user-link" href="<?= app()->route->getUrl('/addStudent') ?>">+ Добавить студента</a>
-    </div>
+
     <div class="admin-panel-container">
         <h1>Админ-панель: управление пользователями</h1>
+        <div class="add-user-container">
+            <!--        <button class="add-user-button" id="addUserButton">+ Добавить пользователя</button>-->
+            <a class="add-user-link" href="<?= app()->route->getUrl('/addScientificSupervisor') ?>">+ Добавить научрука</a>
+            <a class="add-user-link" href="<?= app()->route->getUrl('/addStudent') ?>">+ Добавить студента</a>
+        </div>
         <p>Здесь будут сортировки (возможно)</p>
         <table>
             <thead>

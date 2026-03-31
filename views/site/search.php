@@ -9,17 +9,11 @@
     <link rel="stylesheet" href="/css/style_general.css">
     <link rel="stylesheet" href="/css/style_hello.css">
     <link rel="stylesheet" href="/css/style_admin_panel.css">
-    <title>Decan</title>
+    <title>Искать аспирантов</title>
 </head>
 <body>
-<?php
-$user = app()->auth::user();
-?>
-
 <div class="search-container">
-    <div class="greeting-container">
 
-    </div>
     <form action="/search" method="GET" class="searchbar-search">
         <input type="text" name="search-query" placeholder="Поиск аспирантов по руководителю" value="<?= $searchQuery ?? '' ?>">
         <button type="submit">Поиск</button>

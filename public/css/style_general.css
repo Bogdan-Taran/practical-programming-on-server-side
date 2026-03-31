@@ -82,7 +82,7 @@ button, .add-user-link {
     text-decoration: none;
 }
 
-button:hover {
+button:hover, .add-user-link:hover {
     background-color: #457ba8;
 }
 

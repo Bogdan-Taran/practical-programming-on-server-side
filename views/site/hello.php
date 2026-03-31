@@ -17,35 +17,19 @@ $user = app()->auth::user();
 ?>
 
 <div class="hello-container">
-    <div class="greeting-container">
+    <h1>Здравствуйте, <?php echo $user->firstname; ?>, что бы вы хотели сделать:</h1>
+    <div class="actions-container">
+        <a class="action-item" href="<?= app()->route->getUrl('/search') ?>">Поиск аспирантов по руководителю</a>
+        <?php if (app()->auth::user()->role_id === \Model\User::ROLE_ADMIN): ?>
+            <a class="action-item" href="<?= app()->route->getUrl('/admin') ?>">Добавить аспирантов/научного руководителя</a>
+        <?php endif; ?>
+        <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Сформировать отчёт по количеству защит за период</a>
+        <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Учёт научных публикаций</a>
+        <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Учёт диссертаций</a>
 
     </div>
-    <form action="/hello" method="GET" class="searchbar-hello">
-        <input type="text" name="search-query" placeholder="Поиск аспирантов по руководителю" value="<?= $searchQuery ?? '' ?>">
-        <button type="submit">Поиск</button>
-    </form>
-    <div class="hello-search-container">
-            <h2>Результаты поиска:</h2>
-    <?php if (!empty($students)): ?>
-    <table>
-        <thead>
-            <tr>
-                <th>ФИО</th>
-            </tr>
-        </thead>
-        <tbody>
-                <?php foreach ($students as $student): ?>
-                    <tr>
-                        <td><?= $student->lastname ?> <?= $student->firstname ?> <?= $student->patronymic ?></td>
-                    </tr>
-                <?php endforeach; ?>
-        </tbody>
-    </table>
 
-    <?php elseif (isset($searchQuery)): ?>
-        <p>По запросу "<?= $searchQuery ?>" ничего не найдено.</p>
-    <?php endif; ?>
-    </div>
+
 </div>
 
 </body>
