@@ -1,7 +1,19 @@
-<div id="addUserModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Добавить пользователя</h2>
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/style_add_user.css">
+    <link rel="stylesheet" href="/css/style_general.css">
+    <link rel="stylesheet" href="/css/style_admin_panel.css">
+    <title>Add user</title>
+</head>
+<body>
+<main class="main-container-admin">
+<div>
+        <h2>Добавить студента</h2>
 
         <?php if (!empty($errors)): ?>
             <div class="error">
@@ -11,18 +23,18 @@
             </div>
         <?php endif; ?>
 
-<!--        --><?php //if ($success): ?>
-<!--            <div class="success">-->
-<!--                <p>Пользователь успешно добавлен!</p>-->
-<!--            </div>-->
-<!--        --><?php //endif; ?>
+        <?php if ($success): ?>
+        <div class="success">
+                        <p>Пользователь успешно добавлен!</p>
+                   </div>
+        <?php endif; ?>
 
         <form id="addUserForm" method="post" action="/admin/addUser">
             <div class="form-group">
-                <label for="role_id">Роль:</label>
-                <select id="role_id" name="role_id" required>
+                <label for="user_role_id">Роль:</label>
+                <select id="user_role_id" name="user_role_id" required>
                     <option value="">Выберите роль</option>
-                    <?php foreach ($users_roles as $role): ?>
+                    <?php foreach ($roles as $role): ?>
                         <option value="<?php echo $role->user_role_id; ?>"><?php echo $role->role_name; ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -97,56 +109,12 @@
 
             <button type="submit">Добавить</button>
         </form>
-    </div>
+
 </div>
+</main>
+</body>
+</html>
 
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-</style>
 
-<script>
-    document.getElementById('role_id').addEventListener('change', function () {
-        var supervisorFields = document.getElementById('supervisor-fields');
-        var studentFields = document.getElementById('student-fields');
-        if (this.value == 1) { // Научный руководитель
-            supervisorFields.style.display = 'block';
-            studentFields.style.display = 'none';
-        } else if (this.value == 2) { // Аспирант
-            supervisorFields.style.display = 'none';
-            studentFields.style.display = 'block';
-        } else {
-            supervisorFields.style.display = 'none';
-            studentFields.style.display = 'none';
-        }
-    });
-</script>
+
+

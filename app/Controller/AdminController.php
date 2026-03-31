@@ -1,17 +1,18 @@
 <?php
 
-namespace app\Controller;
+namespace Controller;
 
 
-use app\model\Role;
-use app\model\AcademicDegree;
-use app\model\Student;
-use app\model\Group;
-use app\model\Specialization;
-use app\Controller;
 use Model\User;
+use Src\View;
+use Controller\Site;
+use Model\UsersRoles;
+use Model\AcademicDegree;
+use Model\Student;
+use Model\Group;
+use Model\Specialization;
 
-class AdminController extends Controller
+class AdminController extends Site
 {
     public function addUser()
     {
@@ -93,13 +94,14 @@ class AdminController extends Controller
             }
         }
 
-        $roles = Role::getAll();
-        $academic_degrees = AcademicDegree::getAll();
-        $groups = Group::getAll();
-        $specializations = Specialization::getAll();
+        $roles = UsersRoles::all();
+        $academic_degrees = AcademicDegree::all();
+        $groups = Group::all();
+        $specializations = Specialization::all();
         $supervisors = User::where('role_id', 1);
 
-        $this->view->render('site/add_user', [
+
+        return (new View())->render('site.add_user', [
             'errors' => $errors,
             'success' => $success,
             'roles' => $roles,
@@ -107,6 +109,24 @@ class AdminController extends Controller
             'groups' => $groups,
             'specializations' => $specializations,
             'supervisors' => $supervisors,
+        ]);
+    }
+
+    public function addScientificSupervisor(){
+        $errors = [];
+        $success = false;
+    }
+
+    public function addStudent(){
+        $errors = [];
+        $success = false;
+
+        $roles = UsersRoles::all();
+
+        return (new View())->render('site.add_student', [
+            'errors' => $errors,
+            'success' => $success,
+            'roles' => $roles,
         ]);
     }
 }

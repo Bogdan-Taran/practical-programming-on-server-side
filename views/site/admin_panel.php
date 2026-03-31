@@ -12,7 +12,9 @@
 <body>
 <main class="main-container-admin">
     <div class="add-user-container">
-        <button class="add-user-button" id="addUserButton">+ Добавить пользователя</button>
+<!--        <button class="add-user-button" id="addUserButton">+ Добавить пользователя</button>-->
+        <a class="add-user-link" href="<?= app()->route->getUrl('/addScientificSupervisor') ?>">+ Добавить научрука</a>
+        <a class="add-user-link" href="<?= app()->route->getUrl('/addStudent') ?>">+ Добавить студента</a>
     </div>
     <div class="admin-panel-container">
         <h1>Админ-панель: управление пользователями</h1>
@@ -38,21 +40,20 @@
     </div>
 </main>
 
-<?php include 'add_user.php'; ?>
 
-<script>
-    const addUserModal = document.getElementById('addUserModal');
-    const addUserButton = document.getElementById('addUserButton');
-    const closeButton = document.querySelector('.close');
-
-    addUserButton.onclick = () => addUserModal.style.display = 'block';
-    closeButton.onclick = () => addUserModal.style.display = 'none';
-
-    window.onclick = (event) => {
-        if (event.target === addUserModal) {
-            addUserModal.style.display = 'none';
-        }
-    };
-</script>
+<!--<script>-->
+<!--    const addUserModal = document.getElementById('addUserModal');-->
+<!--    const addUserButton = document.getElementById('addUserButton');-->
+<!--    const closeButton = document.querySelector('.close');-->
+<!---->
+<!--    addUserButton.onclick = () => addUserModal.style.display = 'block';-->
+<!--    closeButton.onclick = () => addUserModal.style.display = 'none';-->
+<!---->
+<!--    window.onclick = (event) => {-->
+<!--        if (event.target === addUserModal) {-->
+<!--            addUserModal.style.display = 'none';-->
+<!--        }-->
+<!--    };-->
+<!--</script>-->
 </body>
 </html>

@@ -13,3 +13,7 @@ Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
 
 Route::add('GET', '/admin', [Controller\Site::class, 'adminPanel'])
     ->middleware('auth', 'admin');
+Route::add('GET', '/addScientificSupervisor', [Controller\AdminController::class, 'addScientificSupervisor'])
+    ->middleware('auth', 'admin');
+Route::add('GET', '/addStudent', [Controller\AdminController::class, 'addStudent'])
+    ->middleware('auth', 'admin');

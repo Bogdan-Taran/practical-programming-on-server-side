@@ -68,7 +68,7 @@ select:not([value=""]):not(:focus) ~ label {
     color: #325a7c;
 }
 
-button {
+button, .add-user-link {
     width: 100%;
     padding: 12px;
     background-color: #325a7c;
@@ -79,6 +79,7 @@ button {
     font-size: 16px;
     font-weight: bold;
     margin-top: 10px;
+    text-decoration: none;
 }
 
 button:hover {

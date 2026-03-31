@@ -36,7 +36,7 @@ class User extends Model implements IdentityInterface
 
     public function role(): BelongsTo
     {
-        return $this->belongsTo(UserRole::class, 'role_id', 'user_role_id');
+        return $this->belongsTo(UsersRoles::class, 'role_id', 'user_role_id');
     }
 
     public function findIdentity(int $id)

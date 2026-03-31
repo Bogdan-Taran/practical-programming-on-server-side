@@ -3,7 +3,7 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRole extends Model
+class UsersRoles extends Model
 {
     protected $table = 'users_roles';
     protected $primaryKey = 'user_role_id';
