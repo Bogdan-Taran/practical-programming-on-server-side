@@ -121,12 +121,20 @@ class AdminController extends Site
         $errors = [];
         $success = false;
 
+
+
         $roles = UsersRoles::all();
+        $groups = Group::all();
+        $specializations = Specialization::all();
+        $supervisors = User::where('role_id', 1)->get();
 
         return (new View())->render('site.add_student', [
             'errors' => $errors,
             'success' => $success,
             'roles' => $roles,
+            'groups' => $groups,
+            'specializations' => $specializations,
+            'supervisors' => $supervisors,
         ]);
     }
 }

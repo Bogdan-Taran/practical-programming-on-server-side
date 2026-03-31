@@ -11,7 +11,7 @@ use Src\Request;
 class User extends Model implements IdentityInterface
 {
     use HasFactory;
-
+    protected $table = 'users';
     public const ROLE_SUPERVISOR = 1;
     public const ROLE_RESEARCHER = 2;
     public const ROLE_ADMIN = 3;

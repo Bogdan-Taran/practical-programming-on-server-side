@@ -13,7 +13,7 @@
 <body>
 <main class="main-container-admin">
 <div>
-        <h2>Добавить студента</h2>
+
 
         <?php if (!empty($errors)): ?>
             <div class="error">
@@ -30,6 +30,7 @@
         <?php endif; ?>
 
         <form id="addUserForm" method="post" action="/admin/addUser">
+            <h2>Добавить студента</h2>
             <div class="form-group">
                 <label for="user_role_id">Роль:</label>
                 <select id="user_role_id" name="user_role_id" required>
