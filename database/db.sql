@@ -28,6 +28,7 @@ CREATE TABLE dissertation_status(
 	dissertation_status_name VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
+
 CREATE TABLE indexes(
 	index_id INT AUTO_INCREMENT PRIMARY KEY,
 	index_name VARCHAR(255) NOT NULL
@@ -177,3 +178,8 @@ INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('15', 'с222'
 INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('16', 'д333');
 INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('17', 'к444');
 INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('18', 'в555');
+
+
+INSERT INTO `dissertation_status` (`dissertation_status_id`, `dissertation_status_name`) VALUES ('1', 'Пишется');
+INSERT INTO `dissertation_status` (`dissertation_status_id`, `dissertation_status_name`) VALUES ('2', 'Предзащита');
+INSERT INTO `dissertation_status` (`dissertation_status_id`, `dissertation_status_name`) VALUES ('3', 'Защищена');

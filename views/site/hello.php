@@ -25,7 +25,7 @@ $user = app()->auth::user();
         <?php endif; ?>
         <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Сформировать отчёт по количеству защит за период</a>
         <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Учёт научных публикаций</a>
-        <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Учёт диссертаций</a>
+        <a class="action-item" href="<?= app()->route->getUrl('/dissertations') ?>">Учёт диссертаций</a>
 
     </div>
 

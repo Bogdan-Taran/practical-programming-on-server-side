@@ -68,7 +68,7 @@ select:not([value=""]):not(:focus) ~ label {
     color: #325a7c;
 }
 
-button, .add-user-link {
+button, .add-user-link, .add-dissertations-link, .add-dissertations-link {
     width: 100%;
     padding: 12px;
     background-color: #325a7c;
@@ -82,7 +82,7 @@ button, .add-user-link {
     text-decoration: none;
 }
 
-button:hover, .add-user-link:hover {
+button:hover, .add-user-link:hover, .add-dissertations-link:hover {
     background-color: #457ba8;
 }
 

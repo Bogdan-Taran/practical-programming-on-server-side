@@ -1,0 +1,20 @@
+.dissertations-container{
+    background: rgb(248, 249, 233);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 80vw;
+    margin: 20px auto; /* Center the container horizontally */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100vw; /* Use 100% width within max-width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-dissertations-link{
+    margin: 20px;
+    align-self: center;
+    max-width: 15vw;
+    text-align: center;
+}
