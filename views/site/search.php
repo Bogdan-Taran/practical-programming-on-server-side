@@ -16,35 +16,35 @@
 $user = app()->auth::user();
 ?>
 
-<div class="hello-container">
+<div class="search-container">
     <div class="greeting-container">
 
     </div>
-    <form action="/hello" method="GET" class="searchbar-hello">
+    <form action="/search" method="GET" class="searchbar-search">
         <input type="text" name="search-query" placeholder="Поиск аспирантов по руководителю" value="<?= $searchQuery ?? '' ?>">
         <button type="submit">Поиск</button>
     </form>
-    <div class="hello-search-container">
-            <h2>Результаты поиска:</h2>
-    <?php if (!empty($students)): ?>
-    <table>
-        <thead>
-            <tr>
-                <th>ФИО</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="search-result-container">
+        <h2>Результаты поиска:</h2>
+        <?php if (!empty($students)): ?>
+            <table>
+                <thead>
+                <tr>
+                    <th>ФИО</th>
+                </tr>
+                </thead>
+                <tbody>
                 <?php foreach ($students as $student): ?>
                     <tr>
                         <td><?= $student->lastname ?> <?= $student->firstname ?> <?= $student->patronymic ?></td>
                     </tr>
                 <?php endforeach; ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
 
-    <?php elseif (isset($searchQuery)): ?>
-        <p>По запросу "<?= $searchQuery ?>" ничего не найдено.</p>
-    <?php endif; ?>
+        <?php elseif (isset($searchQuery)): ?>
+            <p>По запросу "<?= $searchQuery ?>" ничего не найдено.</p>
+        <?php endif; ?>
     </div>
 </div>
 

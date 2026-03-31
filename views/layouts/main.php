@@ -23,6 +23,7 @@
         else:
             ?>
             <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->firstname ?>)</a>
+
             <?php if (app()->auth::user()->role_id === \Model\User::ROLE_ADMIN): ?>
                 <a href="<?= app()->route->getUrl('/admin') ?>">Админ-панель</a>
             <?php endif; ?>

@@ -6,7 +6,7 @@
     align-items: center;
     width: 100%;
 }
-.admin-panel-container {
+.admin-panel-container, .search-result-container {
     background: rgb(248, 249, 233);
     padding: 30px;
     border-radius: 20px;

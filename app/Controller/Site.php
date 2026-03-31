@@ -25,9 +25,19 @@ class Site
 
     }
 
-    public function hello(): string
+    public function hello(Request $request): string
     {
-        return new View('site.hello', ['message' => 'hello working']);
+        $searchQuery = $request->get('search-query') ?? ''; // Получаем запрос, по умолчанию пустая строка
+        $students = []; // Инициализируем список студентов как пустой массив
+
+        // Выполняем поиск только если запрос не пуст
+        if ($searchQuery !== '') {
+            // Предполагается, что у вас есть метод для поиска студентов по фамилии научного руководителя
+            $students = Student::searchBySupervisorLastName($searchQuery);
+        }
+
+        // Всегда передаем обе переменные в представление
+        return new View('site.hello', ['students' => $students, 'searchQuery' => $searchQuery]);
     }
 
     public function login(Request $request): string
