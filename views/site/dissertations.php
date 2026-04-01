@@ -15,7 +15,6 @@
     <?= $message ?? '' ?>
 </div>
 <div id="status-picker" class="status-picker">
-
         <form method="post" action="<?= app()->route->getUrl('/updateDissertationStatus') ?>">
             <input type="hidden" name="dissertation_id" id="dissertation_id_for_status_change" value="">
             <label for="dissertation_status_id">Статус:</label>
