@@ -27,7 +27,7 @@
             </select>
             <button type="submit">Сохранить</button>
         </form>
-    
+
 </div>
 <div class="dissertations-container">
     <h1>Диссертации</h1>
@@ -42,7 +42,13 @@
             <th>Специальность ВАК</th>
         </tr>
         </thead>
-        <?php if (!empty($dissertations)): ?>
+        <?php if (empty($dissertations)): ?>
+        <tbody>
+            <tr>
+                <td colspan="5">Диссертаций нет</td>
+            </tr>
+        </tbody>
+        <?php else: ?>
         <tbody>
         <?php foreach ($dissertations as $dissertation): ?>
             <tr>
@@ -53,12 +59,6 @@
                 <td><?= $dissertation->bakSpeciality->bak_speciality_name ?></td>
             </tr>
         <?php endforeach; ?>
-        </tbody>
-        <?php else: ?>
-        <tbody>
-            <tr>
-                <td colspan="5">Диссертаций нет</td>
-            </tr>
         </tbody>
         <?php endif; ?>
     </table>

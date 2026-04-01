@@ -6,11 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/style_general.css">
+    <link rel="stylesheet" href="/css/style_admin_panel.css">
     <link rel="stylesheet" href="/css/style_scientific_publications.css">
     <title>Научные публикации</title>
 </head>
 <body>
-<div class="add_scientific_publications_container" hidden="hidden">
+
+<div id="add_scientific_publications_container" class="add_scientific_publications_container" hidden="hidden">
     <form method="post" action="<?= app()->route->getUrl('/addScientificPublication') ?>">
         <h1>Добавить научную публикацию</h1>
         <div class="form-group">
@@ -53,45 +55,62 @@
             <label for="student_id">Студент:</label>
         </div>
 
-        <button type="submit">Добавить</button>
+        <button id="add_scientific_publications_button" type="submit">Добавить</button>
     </form>
 </div>
 
 
 <div class="scientific-publications-container">
     <h1>Научные публикации</h1>
-    <a class="add-dissertations-link" href="<?= app()->route->getUrl('/addDissertation') ?>">+ Добавить диссертацию</a>
+    <button id="toggle_add_scientific_publication_form" class="add-scientific-publication-button">+ Добавить научную публикацию</button>
     <table>
         <thead>
         <tr>
-            <th>Тема диссертации</th>
-            <th>Дата защиты</th>
-            <th>Статус</th>
+            <th>Название публикации</th>
+            <th>Издание</th>
+            <th>Дата публикации</th>
             <th>Студент</th>
-            <th>Специальность ВАК</th>
+            <th>Индекс</th>
         </tr>
         </thead>
-        <?php if (!empty($dissertations)): ?>
+        <?php if (empty($scientific_publications)): ?>
             <tbody>
-            <?php foreach ($dissertations as $dissertation): ?>
-                <tr>
-                    <td><?= $dissertation->theme ?></td>
-                    <td><?= date('d.m.Y', strtotime($dissertation->approval_date)) ?></td>
-                    <td class="change-dissertation-status" data-dissertation-id="<?= $dissertation->dissertation_id ?>" data-current-status-id="<?= $dissertation->status->dissertation_status_id ?>"><?= $dissertation->status->dissertation_status_name ?></td>
-                    <td><?= $dissertation->student->lastname ?> <?= $dissertation->student->firstname ?></td>
-                    <td><?= $dissertation->bakSpeciality->bak_speciality_name ?></td>
-                </tr>
-            <?php endforeach; ?>
+            <tr>
+                <td colspan="5">Нет научных публикаций</td>
+            </tr>
             </tbody>
         <?php else: ?>
             <tbody>
-            <tr>
-                <td colspan="5">Диссертаций нет</td>
-            </tr>
+            <?php foreach ($scientific_publications as $scientific_publication): ?>
+                <tr>
+                    <td><?= $scientific_publication->name ?></td>
+                    <td><?= $scientific_publication->edition->edition_name ?></td>
+                    <td><?= date('d.m.Y', strtotime($scientific_publication->publication_date)) ?></td>
+                    <td><?= $scientific_publication->student->lastname ?> <?= $scientific_publication->student->firstname ?></td>
+                    <td><?= $scientific_publication->index->index_name ?></td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         <?php endif; ?>
     </table>
 </div>
+<script>
+    const addScntPubCont = document.getElementById('add_scientific_publications_container');
+    const toggleAddScntPubFormButton = document.getElementById('toggle_add_scientific_publication_form');
 
+    toggleAddScntPubFormButton.addEventListener('click', function() {
+        if (addScntPubCont.hidden) {
+            addScntPubCont.hidden = false;
+        } else {
+            addScntPubCont.hidden = true;
+        }
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!addScntPubCont.contains(event.target) && !toggleAddScntPubFormButton.contains(event.target) && !addScntPubCont.hidden) {
+            addScntPubCont.hidden = true;
+        }
+    });
+</script>
 </body>
 </html>

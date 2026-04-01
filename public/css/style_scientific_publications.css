@@ -1,0 +1,26 @@
+.scientific-publications-container{
+    background: rgb(248, 249, 233);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 80vw;
+    margin: 20px auto; /* Center the container horizontally */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100vw; /* Use 100% width within max-width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add_scientific_publications_container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    border-radius: 15px;
+    z-index: 5;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}

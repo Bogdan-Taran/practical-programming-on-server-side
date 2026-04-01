@@ -68,7 +68,7 @@ select:not([value=""]):not(:focus) ~ label {
     color: #325a7c;
 }
 
-button, .add-user-link, .add-dissertations-link, .add-dissertations-link {
+button, .add-user-link, .add-dissertations-link, .add-dissertations-link, .add-scientific-publication-button {
     width: 100%;
     padding: 12px;
     background-color: #325a7c;
@@ -84,6 +84,9 @@ button, .add-user-link, .add-dissertations-link, .add-dissertations-link {
 
 button:hover, .add-user-link:hover, .add-dissertations-link:hover {
     background-color: #457ba8;
+    transform: scale(1);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .message {
