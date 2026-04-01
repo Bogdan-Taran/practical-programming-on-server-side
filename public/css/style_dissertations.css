@@ -21,6 +21,7 @@
 
 table tbody tr td:nth-child(3):hover{
     background: #457ba8;
+    color: #fff;
 }
 
 .status-picker{

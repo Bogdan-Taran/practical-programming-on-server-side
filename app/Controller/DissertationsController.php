@@ -87,7 +87,10 @@ class DissertationsController
         }
         $bak_specialities = BAKSpeciality::all();
         $statuses = DissertationStatus::all();
-        $students = Student::all();
+//        $students = Student::all();
+        $studentsWithDissertations = Dissertations::pluck('student_id')->toArray();
+        $students = Student::whereNotIn('student_id', $studentsWithDissertations)->get();
+
         return new View('site.add_dissertation', [
             'students' => $students,
             'errors' => $errors,
