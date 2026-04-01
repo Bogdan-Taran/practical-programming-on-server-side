@@ -116,7 +116,7 @@
         <h1>Удалить научную публикацию</h1>
         <input type="hidden" name="scientific_publication_id" id="delete_scientific_publication_id" value="">
         <p>Вы уверены, что хотите удалить эту научную публикацию?</p>
-        <button type="submit">Удалить</button>
+        <button type="submit" class="delete_scientific_publications_button">Удалить</button>
         <button type="button" id="cancel_delete_scientific_publication">Отмена</button>
     </form>
 </div>

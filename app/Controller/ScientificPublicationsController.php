@@ -189,7 +189,8 @@ class ScientificPublicationsController
         }
 
         if ($request->method === 'POST') {
-            $publicationId = $request->post('id');
+            $data = $request->all();
+            $publicationId = $data['scientific_publication_id'] ?? null;
 
             if (!$publicationId) {
                 $_SESSION['error_message'] = 'Идентификатор публикации не указан для удаления.';

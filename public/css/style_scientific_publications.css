@@ -25,7 +25,7 @@
     text-align: center;
 }
 
-.delete-scientific-publication-button {
+.delete-scientific-publication-button, .delete_scientific_publications_button {
     background-color: #dc3545; /* Red color for delete */
     color: white;
     border: none;
@@ -37,6 +37,6 @@
     margin-left: 5px;
 }
 
-.delete-scientific-publication-button:hover {
+.delete-scientific-publication-button:hover, .delete_scientific_publications_button:hover {
     background-color: #c82333;
 }
