@@ -14,6 +14,7 @@
 <div id="popup-message" class="popup <?= isset($message) && !isset($error) ? 'show success' : '' ?> <?= isset($error) && $error ? 'show error' : '' ?>">
     <?= $message ?? '' ?>
 </div>
+<h1><?= $error ?></h1>
 
 <div id="add_scientific_publications_container" class="add_scientific_publications_container" hidden="hidden">
     <form method="post" action="<?= app()->route->getUrl('/addScientificPublication') ?>">
@@ -64,7 +65,7 @@
 
 
 <div id="change_scientific_publications_container" class="add_scientific_publications_container" hidden="hidden">
-    <form method="post" action="<?= app()->route->getUrl('/changeScientificPublication') ?>">
+    <form method="post" action="<?= app()->route->getUrl('/updateScientificPublication') ?>">
         <h1>Изменить научную публикацию</h1>
         <input type="hidden" name="scientific_publication_id" id="change_scientific_publication_id" value="">
         <div class="form-group">
@@ -170,18 +171,18 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const popup = document.getElementById('popup-message');
-        if (popup && popup.classList.contains('show')) {
-            if (popup.classList.contains('success')) {
-                setTimeout(() => {
-                    popup.classList.remove('show');
-                }, 3000);
-            }
-            if (popup.classList.contains('error')) {
-                setTimeout(() => {
-                    popup.classList.remove('show');
-                }, 3000);
-            }
-        }
+        // if (popup && popup.classList.contains('show')) {
+        //     if (popup.classList.contains('success')) {
+        //         setTimeout(() => {
+        //             popup.classList.remove('show');
+        //         }, 3000);
+        //     }
+        //     if (popup.classList.contains('error')) {
+        //         setTimeout(() => {
+        //             popup.classList.remove('show');
+        //         }, 3000);
+        //     }
+        // }
 
         const addScntPubCont = document.getElementById('add_scientific_publications_container');
         const toggleAddScntPubFormButton = document.getElementById('toggle_add_scientific_publication_form');
@@ -200,6 +201,7 @@
             }
         });
 
+        //клик снаружи
         document.addEventListener('click', function(event) {
             if (!addScntPubCont.contains(event.target) && !toggleAddScntPubFormButton.contains(event.target) && !addScntPubCont.hidden) {
                 addScntPubCont.hidden = true;

@@ -19,7 +19,7 @@ Route::add(['GET', 'POST'], '/scientificPublications', [Controller\ScientificPub
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/addScientificPublication', [Controller\ScientificPublicationsController::class, 'addScientificPublication'])
     ->middleware('auth');
-Route::add(['GET', 'POST'], '/changeScientificPublication', [Controller\ScientificPublicationsController::class, 'updateScientificPublication'])
+Route::add(['GET', 'POST'], '/updateScientificPublication', [Controller\ScientificPublicationsController::class, 'updateScientificPublication'])
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/deleteScientificPublication', [Controller\ScientificPublicationsController::class, 'deleteScientificPublication'])
     ->middleware('auth');

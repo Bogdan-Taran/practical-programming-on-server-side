@@ -115,7 +115,7 @@ class ScientificPublicationsController
 
         if ($request->method === 'POST') {
             $data = $request->all();
-            $publicationId = $data['id'] ?? null;
+            $publicationId = $data['scientific_publication_id'] ?? null;
 
             if (!$publicationId) {
                 $_SESSION['error_message'] = 'Идентификатор публикации не указан.';
@@ -167,20 +167,6 @@ class ScientificPublicationsController
             app()->route->redirect('/scientificPublications'); // Redirect back to the list on error
             return '';
 
-        } else { // GET request
-            $publicationId = $request->get('id');
-            if ($publicationId) {
-                $publication = ScientificPublications::find($publicationId);
-                if (!$publication) {
-                    $_SESSION['error_message'] = 'Публикация не найдена для редактирования.';
-                    app()->route->redirect('/scientificPublications');
-                    return '';
-                }
-            } else {
-                $_SESSION['error_message'] = 'Идентификатор публикации не указан для редактирования.';
-                app()->route->redirect('/scientificPublications');
-                return '';
-            }
         }
 
         $editions = Editions::all();
