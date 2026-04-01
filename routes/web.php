@@ -15,6 +15,11 @@ Route::add(['GET', 'POST'], '/updateDissertationStatus', [Controller\Dissertatio
     ->middleware('auth');
 
 
+
+Route::add(['GET', 'POST'], '/createStatistic', [Controller\StatisticController::class, 'createStatistic'])
+    ->middleware('auth');
+
+
 Route::add(['GET', 'POST'], '/scientificPublications', [Controller\ScientificPublicationsController::class, 'ScientificPublications'])
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/addScientificPublication', [Controller\ScientificPublicationsController::class, 'addScientificPublication'])

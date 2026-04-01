@@ -171,18 +171,18 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const popup = document.getElementById('popup-message');
-        // if (popup && popup.classList.contains('show')) {
-        //     if (popup.classList.contains('success')) {
-        //         setTimeout(() => {
-        //             popup.classList.remove('show');
-        //         }, 3000);
-        //     }
-        //     if (popup.classList.contains('error')) {
-        //         setTimeout(() => {
-        //             popup.classList.remove('show');
-        //         }, 3000);
-        //     }
-        // }
+        if (popup && popup.classList.contains('show')) {
+            if (popup.classList.contains('success')) {
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+            if (popup.classList.contains('error')) {
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+        }
 
         const addScntPubCont = document.getElementById('add_scientific_publications_container');
         const toggleAddScntPubFormButton = document.getElementById('toggle_add_scientific_publication_form');

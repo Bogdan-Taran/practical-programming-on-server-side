@@ -23,7 +23,7 @@ $user = app()->auth::user();
         <?php if (app()->auth::user()->role_id === \Model\User::ROLE_ADMIN): ?>
             <a class="action-item" href="<?= app()->route->getUrl('/admin') ?>">Добавить аспирантов/научного руководителя</a>
         <?php endif; ?>
-        <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Сформировать отчёт по количеству защит за период</a>
+        <a class="action-item" href="<?= app()->route->getUrl('/createStatistic') ?>">Сформировать отчёт по количеству защит за период</a>
         <a class="action-item" href="<?= app()->route->getUrl('/scientificPublications') ?>">Учёт научных публикаций</a>
         <a class="action-item" href="<?= app()->route->getUrl('/dissertations') ?>">Учёт диссертаций</a>
 
