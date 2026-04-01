@@ -14,6 +14,21 @@
 <div id="popup-message" class="popup <?= isset($message) && !isset($error) ? 'show success' : '' ?> <?= isset($error) && $error ? 'show error' : '' ?>">
     <?= $message ?? '' ?>
 </div>
+<div id="status-picker" class="status-picker">
+
+        <form method="post" action="<?= app()->route->getUrl('/updateDissertationStatus') ?>">
+            <input type="hidden" name="dissertation_id" id="dissertation_id_for_status_change" value="">
+            <label for="dissertation_status_id">Статус:</label>
+            <select id="dissertation_status_id_picker" name="dissertation_status_id">
+                <option value="" disabled selected>Выберите новый статус</option>
+                <?php foreach ($statuses as $status): ?>
+                    <option value="<?php echo $status->dissertation_status_id; ?>"><?php echo $status->dissertation_status_name; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit">Сохранить</button>
+        </form>
+    
+</div>
 <div class="dissertations-container">
     <h1>Диссертации</h1>
     <a class="add-dissertations-link" href="<?= app()->route->getUrl('/addDissertation') ?>">+ Добавить диссертацию</a>
@@ -33,7 +48,7 @@
             <tr>
                 <td><?= $dissertation->theme ?></td>
                 <td><?= date('d.m.Y', strtotime($dissertation->approval_date)) ?></td>
-                <td><?= $dissertation->status->dissertation_status_name ?></td>
+                <td class="change-dissertation-status" data-dissertation-id="<?= $dissertation->dissertation_id ?>" data-current-status-id="<?= $dissertation->status->dissertation_status_id ?>"><?= $dissertation->status->dissertation_status_name ?></td>
                 <td><?= $dissertation->student->lastname ?> <?= $dissertation->student->firstname ?></td>
                 <td><?= $dissertation->bakSpeciality->bak_speciality_name ?></td>
             </tr>
@@ -47,8 +62,6 @@
         </tbody>
         <?php endif; ?>
     </table>
-
-
 </div>
 
 <script>
@@ -66,6 +79,36 @@
                 }, 3000);
             }
         }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusPicker = document.getElementById('status-picker');
+        const dissertationIdInput = document.getElementById('dissertation_id_for_status_change');
+        const statusSelect = document.getElementById('dissertation_status_id_picker');
+
+        document.querySelectorAll('.change-dissertation-status').forEach(cell => {
+            cell.addEventListener('click', function (event) {
+                event.stopPropagation(); // Prevent event from bubbling up to document click
+                const dissertationId = this.dataset.dissertationId;
+                const currentStatusId = this.dataset.currentStatusId;
+
+                dissertationIdInput.value = dissertationId;
+                statusSelect.value = currentStatusId; // Set current status in picker
+
+                // Position the status picker next to the clicked cell
+                const rect = this.getBoundingClientRect();
+                statusPicker.style.top = `${rect.top + window.scrollY}px`;
+                statusPicker.style.left = `${rect.left + window.scrollX + rect.width + 10}px`; // 10px offset
+                statusPicker.classList.add('show');
+            });
+        });
+
+        // Hide status picker when clicking outside
+        document.addEventListener('click', function (event) {
+            if (!statusPicker.contains(event.target) && !event.target.classList.contains('change-dissertation-status')) {
+                statusPicker.classList.remove('show');
+            }
+        });
     });
 </script>
 </body>

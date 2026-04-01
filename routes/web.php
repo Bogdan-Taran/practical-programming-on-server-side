@@ -9,6 +9,8 @@ Route::add('GET', '/dissertations', [Controller\DissertationsController::class, 
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/addDissertation', [Controller\DissertationsController::class, 'addDissertation'])
     ->middleware('auth');
+Route::add(['GET', 'POST'], '/updateDissertationStatus', [Controller\DissertationsController::class, 'updateDissertationStatus'])
+    ->middleware('auth');
 
 Route::add('GET', '/', [Controller\Site::class, 'redirectToHello'])
     ->middleware('auth');

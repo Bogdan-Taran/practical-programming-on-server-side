@@ -24,10 +24,12 @@ class DissertationsController
 
         //$dissertations = Dissertations::all();
         $dissertations = Dissertations::with(['status', 'bakSpeciality', 'student'])->get();
+        $statuses = DissertationStatus::all();
         return new View('site.dissertations', [
             'dissertations' => $dissertations,
             'message' => $message,
             'error' => $error,
+            'statuses' => $statuses,
         ]);
     }
 
@@ -94,6 +96,40 @@ class DissertationsController
             'statuses' => $statuses,
 
         ]);
+    }
+
+    public function updateDissertationStatus(Request $request){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if ($request->method === 'POST') {
+            $dissertationId = $request->get('dissertation_id');
+            $newStatusId = $request->get('dissertation_status_id');
+
+            if (empty($dissertationId) || empty($newStatusId)) {
+                $_SESSION['error_message'] = 'Недостаточно данных для обновления статуса диссертации.';
+                app()->route->redirect('/dissertations');
+                return '';
+            }
+
+            $dissertation = Dissertations::find($dissertationId);
+
+            if (!$dissertation) {
+                $_SESSION['error_message'] = 'Диссертация не найдена.';
+                app()->route->redirect('/dissertations');
+                return '';
+            }
+
+            $dissertation->status_id = $newStatusId;
+            if ($dissertation->save()) {
+                $_SESSION['success_message'] = 'Статус диссертации успешно обновлен!';
+            } else {
+                $_SESSION['error_message'] = 'Ошибка при обновлении статуса диссертации.';
+            }
+        }
+        app()->route->redirect('/dissertations');
+        return '';
     }
 
 }
