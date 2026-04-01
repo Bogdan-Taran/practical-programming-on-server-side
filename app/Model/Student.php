@@ -17,5 +17,11 @@ class Student extends Model
             ->select('students.*') // Select all columns from the students table
             ->get();
     }
+    public static function getSupervisorByQuery(string $searchQuery): ?User
+    {
+        return User::query()
+            ->where('lastname', 'like', "%{$searchQuery}%")
+            ->first();
+    }
 
 }
