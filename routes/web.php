@@ -5,11 +5,19 @@ Route::add('GET', '/hello', [Controller\Site::class, 'hello'])
     ->middleware('auth');
 Route::add('GET', '/search', [Controller\Search::class, 'search'])
     ->middleware('auth');
+
+
 Route::add('GET', '/dissertations', [Controller\DissertationsController::class, 'dissertations'])
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/addDissertation', [Controller\DissertationsController::class, 'addDissertation'])
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/updateDissertationStatus', [Controller\DissertationsController::class, 'updateDissertationStatus'])
+    ->middleware('auth');
+
+
+Route::add(['GET', 'POST'], '/scientificPublications', [Controller\ScientificPublicationsController::class, 'ScientificPublications'])
+    ->middleware('auth');
+Route::add(['GET', 'POST'], '/addScientificPublication', [Controller\ScientificPublicationsController::class, 'addScientificPublication'])
     ->middleware('auth');
 
 Route::add('GET', '/', [Controller\Site::class, 'redirectToHello'])

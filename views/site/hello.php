@@ -24,7 +24,7 @@ $user = app()->auth::user();
             <a class="action-item" href="<?= app()->route->getUrl('/admin') ?>">Добавить аспирантов/научного руководителя</a>
         <?php endif; ?>
         <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Сформировать отчёт по количеству защит за период</a>
-        <a class="action-item" href="<?= app()->route->getUrl('/') ?>">Учёт научных публикаций</a>
+        <a class="action-item" href="<?= app()->route->getUrl('/scientificPublications') ?>">Учёт научных публикаций</a>
         <a class="action-item" href="<?= app()->route->getUrl('/dissertations') ?>">Учёт диссертаций</a>
 
     </div>

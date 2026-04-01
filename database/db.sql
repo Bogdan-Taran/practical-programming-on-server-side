@@ -183,3 +183,9 @@ INSERT INTO `groups_names` (`group_name_id`, `group_name`) VALUES ('18', 'в555'
 INSERT INTO `dissertation_status` (`dissertation_status_id`, `dissertation_status_name`) VALUES ('1', 'Пишется');
 INSERT INTO `dissertation_status` (`dissertation_status_id`, `dissertation_status_name`) VALUES ('2', 'Предзащита');
 INSERT INTO `dissertation_status` (`dissertation_status_id`, `dissertation_status_name`) VALUES ('3', 'Защищена');
+
+INSERT INTO `indexes` (`index_id`, `index_name`) VALUES ('1',  'РИНЦ');
+INSERT INTO `indexes` (`index_id`, `index_name`) VALUES ('2',  'Scopus');
+
+INSERT INTO `editions` (`edition_id`, `edition_name`) VALUES ('1', 'Журнал');
+INSERT INTO `editions` (`edition_id`, `edition_name`) VALUES ('2', 'Сборник');

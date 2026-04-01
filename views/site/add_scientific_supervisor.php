@@ -13,21 +13,9 @@
 <body>
 <main class="main-container-admin">
 <div>
-
-
-        <?php if (!empty($errors)): ?>
-            <div class="error">
-                <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($success): ?>
-        <div class="success">
-                        <p>Научный руководитель успешно добавлен!</p>
-                   </div>
-        <?php endif; ?>
+<!--    <div id="popup-message" class="popup --><?php //= isset($message) && !isset($error) ? 'show success' : '' ?><!-- --><?php //= isset($error) && $error ? 'show error' : '' ?><!--">-->
+<!--        --><?php //= $message ?? '' ?>
+<!--    </div>-->
 
         <form id="addSupervisorForm" method="post" action="/addScientificSupervisor">
             <h1>Добавить научного руководителя</h1>
@@ -72,5 +60,23 @@
 
 </div>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const popup = document.getElementById('popup-message');
+        if (popup && popup.classList.contains('show')) {
+            // Если это сообщение об успехе, скрыть через 3 секунды
+            if (popup.classList.contains('success')) {
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }if (popup.classList.contains('error')) {
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+        }
+    });
+</script>
 </body>
 </html>

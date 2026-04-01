@@ -15,10 +15,15 @@ use Model\Specialization;
 class AdminController extends Site
 {
 
+    public function addScientificSupervisor()
+    {
 
-    public function addScientificSupervisor(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $errors = [];
-        $success = false;
+        $message = '';
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $login = $_POST['login'] ?? null;
@@ -46,6 +51,9 @@ class AdminController extends Site
             if (empty($academic_degree_id)) {
                 $errors[] = 'Укажите ученую степень';
             }
+            if (User::where('login', $login)->first()) {
+                $errors[] = 'Пользователь с таким логином уже существует';
+            }
 
             if (empty($errors)) {
                 $user = new User();
@@ -61,7 +69,6 @@ class AdminController extends Site
                     session_start();
                 }
                 $_SESSION['success_message'] = 'Научный руководитель успешно зарегистрирован!';
-                $success = true;
                 app()->route->redirect('/admin');
                 return ''; // Прекращаем выполнение после редиректа
             }
@@ -69,16 +76,27 @@ class AdminController extends Site
 
         $academic_degrees = AcademicDegree::all();
 
+        $message = $_SESSION['success_message'] ?? '';
+        unset($_SESSION['success_message']);
+// Получаем сообщение об ошибке из сессии, если оно есть, и очищаем его
+        $sessionError = $_SESSION['error_message'] ?? '';
+        unset($_SESSION['error_message']);
+        if (!empty($sessionError)) {
+            // Если было сообщение об ошибке в сессии, добавляем его к текущему сообщению об ошибке
+            $errors[] = implode('<br>', $errors);
+        }
+
+
+
         return (new View())->render('site.add_scientific_supervisor', [
             'errors' => $errors,
-            'success' => $success,
             'academic_degrees' => $academic_degrees,
+            'message' => $message, // Pass success message to the view
         ]);
     }
 
     public function addStudent(){
         $errors = [];
-        $success = false;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Обработка данных формы
@@ -122,11 +140,16 @@ class AdminController extends Site
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
                 }
-                $success = true;
                 $_SESSION['success_message'] = 'Студент успешно зарегистрирован';
                 app()->route->redirect('/admin');
                 return '';
             }
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['error_message'] = implode('<br>', $errors);
+            app()->route->redirect('/addStudent');
+            return '';
         }
 
         $groups = Group::all();
@@ -135,7 +158,6 @@ class AdminController extends Site
 
         return (new View())->render('site.add_student', [
             'errors' => $errors,
-            'success' => $success,
             'groups' => $groups,
             'specializations' => $specializations,
             'supervisors' => $supervisors,
