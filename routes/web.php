@@ -13,6 +13,8 @@ Route::add(['GET', 'POST'], '/addDissertation', [Controller\DissertationsControl
     ->middleware('auth');
 Route::add(['GET', 'POST'], '/updateDissertationStatus', [Controller\DissertationsController::class, 'updateDissertationStatus'])
     ->middleware('auth');
+Route::add(['GET', 'POST'], '/uploadDissertationFile', [Controller\DissertationsController::class, 'uploadDissertationFile'])
+    ->middleware('auth');
 
 
 

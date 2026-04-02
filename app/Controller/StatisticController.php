@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-
+use Validators\Request\StatisticValidator;
 use Model\Dissertations;
 use Model\Editions;
 use Model\Indexes;
@@ -13,52 +13,46 @@ use Src\Request;
 
 class StatisticController
 {
-    public function createStatistic(Request $request){
-        $errors = [];
-        $message = '';
+    public function createStatistic(Request $request)
+    {
         $dissertation_count = null;
 
         if ($request->method === 'POST') {
             $data = $request->all();
 
-            // Validation
-            if (empty($data['start_date'])) {
-                $errors[] = 'Дата начала не может быть пустой.';
-            }
-            if (empty($data['end_date'])) {
-                $errors[] = 'Дата конца не может быть пустой.';
-            }
+            $validator = new StatisticValidator($data);
+            $validator->validateAndRedirect('/createStatistic');
 
-            if (empty($errors)) {
-                $startDate = $data['start_date'];
-                $endDate = $data['end_date'];
+            $startDate = $data['start_date'];
+            $endDate = $data['end_date'];
 
-                // Count scientific publications within the date range
-                $dissertation_count = Dissertations::whereBetween('approval_date', [$startDate, $endDate])->count();
+            // Count scientific publications within the date range
+            $dissertation_count = Dissertations::whereBetween('approval_date', [$startDate, $endDate])->count();
 
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-                $_SESSION['success_message'] = 'Отчёт успешно сформирован.';
-                $_SESSION['dissertation_count'] = $dissertation_count;
-                $_SESSION['start_date'] = $startDate;
-                $_SESSION['end_date'] = $endDate;
-                app()->route->redirect('/createStatistic');
-                return '';
-
-            }
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
-            $_SESSION['error_message'] = implode('<br>', $errors);
-            app()->route->redirect('/createStatistic'); // Redirect back to the statistic creation page on error
+            $_SESSION['success_message'] = 'Отчёт успешно сформирован.';
+            $_SESSION['dissertation_count'] = $dissertation_count;
+            $_SESSION['start_date'] = $startDate;
+            $_SESSION['end_date'] = $endDate;
+            app()->route->redirect('/createStatistic');
             return '';
         }
+        $errors = [];
+        if (isset($_SESSION['error_message'])) {
+            $errors = explode('<br>', $_SESSION['error_message']);
+            unset($_SESSION['error_message']);
+        }
+
+        $message = $_SESSION['success_message'] ?? null;
+        unset($_SESSION['success_message']);
 
 
         return (new View())->render('site.create_statistic',
             [
                 'message' => $message,
+                'errors' => $errors,
                 'dissertation_count' => $dissertation_count,
             ]);
 

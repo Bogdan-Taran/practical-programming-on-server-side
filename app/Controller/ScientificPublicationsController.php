@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Validators\Request\DeleteScientificPublicationValidator;
+use Validators\Request\ScientificPublicationValidator;
 use Model\Editions;
 use Model\Indexes;
 use Model\ScientificPublications;
@@ -38,57 +40,38 @@ class ScientificPublicationsController
 
     public function addScientificPublication(Request $request): string
     {
-        $errors = [];
-        $message = '';
-
         if ($request->method === 'POST') {
             $data = $request->all();
 
-            // Validation
-            if (empty($data['name'])) {
-                $errors[] = 'Название научной публикации не может быть пустым.';
-            }
-            if (empty($data['edition_id'])) {
-                $errors[] = 'Необходимо выбрать издание.';
-            }
-            if (empty($data['publication_date'])) {
-                $errors[] = 'Дата публикации не может быть пустой.';
-            }
-            if (empty($data['index_id'])) {
-                $errors[] = 'Необходимо выбрать индекс.';
-            }
-            if (empty($data['student_id'])) {
-                $errors[] = 'Необходимо выбрать студента.';
+            $validator = new ScientificPublicationValidator($data);
+            $validator->validateAndRedirect('/scientificPublications');
+
+            $scientificPublicationData = [
+                'name' => $data['name'],
+                'edition_id' => $data['edition_id'],
+                'publication_date' => $data['publication_date'],
+                'index_id' => $data['index_id'],
+                'student_id' => $data['student_id'],
+            ];
+
+            if (ScientificPublications::create($scientificPublicationData)) {
+                $_SESSION['success_message'] = 'Научная публикация успешно добавлена!';
+                app()->route->redirect('/scientificPublications');
+                return '';
+            } else {
+                $_SESSION['error_message'] = 'Ошибка при сохранении научной публикации в базу данных.';
+                app()->route->redirect('/scientificPublications');
+                return '';
             }
 
-            if (empty($errors)) {
-                $scientificPublicationData = [
-                    'name' => $data['name'],
-                    'edition_id' => $data['edition_id'],
-                    'publication_date' => $data['publication_date'],
-                    'index_id' => $data['index_id'],
-                    'student_id' => $data['student_id'],
-                ];
-
-                if (ScientificPublications::create($scientificPublicationData)) {
-                    if (session_status() === PHP_SESSION_NONE) {
-                        session_start();
-                    }
-                    $_SESSION['success_message'] = 'Научная публикация успешно добавлена!';
-                    app()->route->redirect('/scientificPublications');
-                    return '';
-                } else {
-                    $errors[] = 'Ошибка при сохранении научной публикации в базу данных.';
-                }
-            }
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
-            $_SESSION['error_message'] = implode('<br>', $errors);
-            app()->route->redirect('/scientificPublications');
-            return '';
         }
-
+        $errors = [];
+        if (isset($_SESSION['error_message'])) {
+            $errors = explode('<br>', $_SESSION['error_message']);
+            unset($_SESSION['error_message']);
+        }
+        $message = $_SESSION['success_message'] ?? null;
+        unset($_SESSION['success_message']);
         $editions = Editions::all();
         $indexes = Indexes::all();
         $students = Student::all();
@@ -110,7 +93,6 @@ class ScientificPublicationsController
             session_start();
         }
 
-        $errors = [];
         $publication = null;
 
         if ($request->method === 'POST') {
@@ -131,42 +113,29 @@ class ScientificPublicationsController
                 return '';
             }
 
-            // Validation
-            if (empty($data['name'])) {
-                $errors[] = 'Название научной публикации не может быть пустым.';
-            }
-            if (empty($data['edition_id'])) {
-                $errors[] = 'Необходимо выбрать издание.';
-            }
-            if (empty($data['publication_date'])) {
-                $errors[] = 'Дата публикации не может быть пустой.';
-            }
-            if (empty($data['index_id'])) {
-                $errors[] = 'Необходимо выбрать индекс.';
-            }
-            if (empty($data['student_id'])) {
-                $errors[] = 'Необходимо выбрать студента.';
-            }
+            $validator = new ScientificPublicationValidator($data);
+            $validator->validateAndRedirect('/scientificPublications');
 
-            if (empty($errors)) {
-                $publication->name = $data['name'];
-                $publication->edition_id = $data['edition_id'];
-                $publication->publication_date = $data['publication_date'];
-                $publication->index_id = $data['index_id'];
-                $publication->student_id = $data['student_id'];
+            $publication->name = $data['name'];
+            $publication->edition_id = $data['edition_id'];
+            $publication->publication_date = $data['publication_date'];
+            $publication->index_id = $data['index_id'];
+            $publication->student_id = $data['student_id'];
 
-                if ($publication->save()) {
-                    $_SESSION['success_message'] = 'Научная публикация успешно обновлена!';
-                    app()->route->redirect('/scientificPublications');
-                    return '';
-                } else {
-                    $errors[] = 'Ошибка при обновлении научной публикации в базу данных.';
-                }
+            if ($publication->save()) {
+                $_SESSION['success_message'] = 'Научная публикация успешно обновлена!';
+                app()->route->redirect('/scientificPublications');
+                return '';
+            } else {
+                $_SESSION['error_message'] = 'Ошибка при обновлении научной публикации в базу данных.';
+                app()->route->redirect('/scientificPublications');
+                return '';
             }
-            $_SESSION['error_message'] = implode('<br>', $errors);
-            app()->route->redirect('/scientificPublications'); // Redirect back to the list on error
-            return '';
-
+        }
+        $errors = [];
+        if (isset($_SESSION['error_message'])) {
+            $errors = explode('<br>', $_SESSION['error_message']);
+            unset($_SESSION['error_message']);
         }
 
         $editions = Editions::all();
@@ -192,11 +161,9 @@ class ScientificPublicationsController
             $data = $request->all();
             $publicationId = $data['scientific_publication_id'] ?? null;
 
-            if (!$publicationId) {
-                $_SESSION['error_message'] = 'Идентификатор публикации не указан для удаления.';
-                app()->route->redirect('/scientificPublications');
-                return '';
-            }
+            $validator = new DeleteScientificPublicationValidator($data);
+            $validator->validateAndRedirect('/scientificPublications');
+
 
             $publication = ScientificPublications::find($publicationId);
 

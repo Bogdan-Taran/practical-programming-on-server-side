@@ -2,6 +2,7 @@
 namespace Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Dissertations extends Model{
     protected $table = 'dissertations';
@@ -30,5 +31,9 @@ class Dissertations extends Model{
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'student_id', 'student_id');
+    }
+    public function files(): HasMany
+    {
+        return $this->hasMany(DissertationFile::class, 'dissertation_id', 'dissertation_id');
     }
 }

@@ -91,13 +91,9 @@ class Site
                     'message' => 'Ошибка валидации'
                 ]);
             }
-
             $data = $request->all();
-
             // Переименовываем ключ пароля для соответствия полю в БД
             $data['password_hash'] = $data['password'];
-
-
             if (User::create($data)) {
                 // Устанавливаем флеш-сообщение
                 if (session_status() === PHP_SESSION_NONE) {
@@ -107,7 +103,11 @@ class Site
                 app()->route->redirect('/login');
             }
         }
-        return new View('site.signup');
+        $academic_degrees = AcademicDegree::all();
+
+        return (new View())->render('site.signup', [
+            'academic_degrees' => $academic_degrees,
+        ]);
     }
 
     public function adminPanel(): string

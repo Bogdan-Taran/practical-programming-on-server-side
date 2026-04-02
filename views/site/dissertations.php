@@ -30,7 +30,17 @@
 </div>
 <div class="dissertations-container">
     <h1>Диссертации</h1>
-    <a class="add-dissertations-link" href="<?= app()->route->getUrl('/addDissertation') ?>">+ Добавить диссертацию</a>
+    <div class="manipulate-container">
+        <div class="searchbar-search">
+            <form action="<?= app()->route->getUrl('/dissertations') ?>" method="GET">
+                <input type="text" name="search-file-query" placeholder="Поиск документов по названию"
+                       value="<?= $searchQuery ?? '' ?>">
+                <button type="submit">Поиск</button>
+            </form>
+        </div>
+        <a class="add-dissertations-link" href="<?= app()->route->getUrl('/addDissertation') ?>">+ Добавить диссертацию</a>
+    </div>
+
     <table>
         <thead>
         <tr>
@@ -39,6 +49,7 @@
             <th>Статус</th>
             <th>Студент</th>
             <th>Специальность ВАК</th>
+            <th>Загруженные файлы</th>
         </tr>
         </thead>
         <?php if (empty($dissertations)): ?>
@@ -56,6 +67,26 @@
                 <td class="change-dissertation-status" data-dissertation-id="<?= $dissertation->dissertation_id ?>" data-current-status-id="<?= $dissertation->status->dissertation_status_id ?>"><?= $dissertation->status->dissertation_status_name ?></td>
                 <td><?= $dissertation->student->lastname ?> <?= $dissertation->student->firstname ?></td>
                 <td><?= $dissertation->bakSpeciality->bak_speciality_name ?></td>
+                <td>
+                    <div class="upload-file-form">
+                    <?php if (!empty($dissertation->files)): ?>
+                        <?php foreach ($dissertation->files as $file): ?>
+                            <a href="<?= $file->file_path ?>" target="_blank"><?= $file->file_name ?></a><br>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Файлов нет</p>
+                    <?php endif; ?>
+
+                        <form action="<?= app()->route->getUrl('/uploadDissertationFile') ?>" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="dissertation_id" value="<?= $dissertation->dissertation_id ?>">
+                            <input type="file" name="dissertation_file" required>
+                            <label>Выберите один файл</label>
+                            <button type="submit">Загрузить</button>
+                        </form>
+                    </div>
+
+                </td>
+                
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -12,18 +12,6 @@
 <body>
 <main class="main-container-admin">
     <div>
-
-
-        <?php if (!empty($errors)): ?>
-            <div class="error">
-                <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-
-
-
         <form id="addUserForm" method="POST" action="/addStudent">
             <h1>Добавить студента</h1>
             <div class="form-group">
@@ -70,6 +58,16 @@
                     <label for="scientific_supervisor_id">Научный руководитель:</label>
                 </div>
             </div>
+            <?php if (!empty($errors)): ?>
+                <div class="error-container">
+                    <p><strong>Ошибки валидации:</strong></p>
+                    <ul>
+                        <?php foreach ($errors as $error): ?>
+                            <?php if(!empty($error)): ?><li><?php echo htmlspecialchars($error); ?></li><?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
             <button type="submit">Добавить</button>
         </form>
@@ -78,7 +76,3 @@
 </main>
 </body>
 </html>
-
-
-
-

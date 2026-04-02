@@ -1,17 +1,21 @@
 <?php
 
 namespace Controller;
+
 use Model\BAKSpeciality;
 use Model\Dissertations;
 use Model\DissertationStatus;
 use Model\Student;
-use Model\User;
 use Src\Request;
 use Src\View;
-
+use Model\DissertationFile;
+use Src\Validator\Validator;
+use Validators\Request\AddDissertationValidator;
 
 class DissertationsController
 {
+    const UPLOAD_DIR = __DIR__ . '/../../public/uploads/dissertations/';
+
     public function dissertations(): string
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -22,12 +26,28 @@ class DissertationsController
         $error = $_SESSION['error_message'] ?? null;
         unset($_SESSION['error_message']);
 
-        //$dissertations = Dissertations::all();
+
         $dissertations = Dissertations::with(['status', 'bakSpeciality', 'student'])->get();
+        $searchQuery = $_GET['search-file-query'] ?? '';
+        $query = Dissertations::with(['status', 'bakSpeciality', 'student', 'files']);
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('theme', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhereHas('files', function ($fileQuery) use ($searchQuery) {
+                        $fileQuery->where('file_name', 'LIKE', '%' . $searchQuery . '%');
+                    });
+            });
+        }
+        $dissertations = $query->get();
         $statuses = DissertationStatus::all();
+        // Ensure upload directory exists
+        if (!is_dir(self::UPLOAD_DIR)) {
+            mkdir(self::UPLOAD_DIR, 0777, true);
+        }
         return new View('site.dissertations', [
             'dissertations' => $dissertations,
             'message' => $message,
+            'searchQuery' => $searchQuery, // Pass search query back to the view
             'error' => $error,
             'statuses' => $statuses,
         ]);
@@ -35,95 +55,76 @@ class DissertationsController
 
     public function addDissertation(Request $request): string
     {
-        $errors = [];
-        $message = '';
-
         if ($request->method === 'POST') {
             $data = $request->all();
-
-            // Basic validation
-            if (empty($data['theme'])) {
-                $errors[] = 'Тема диссертации не может быть пустой.';
+            $validator = new AddDissertationValidator($data);
+            $validator->validateAndRedirect('/addDissertation');
+            $dissertationData = [
+                'theme' => $data['theme'],
+                'approval_date' => $data['approval_date'],
+                'status_id' => $data['dissertation_status_id'],
+                'bak_speciality_id' => $data['bak_speciality_id'],
+                'student_id' => $data['student_id'],
+            ];
+            if (Dissertations::create($dissertationData)) {
+                $_SESSION['success_message'] = 'Диссертация успешно добавлена!';
+                app()->route->redirect('/dissertations');
+                return '';
+            } else {
+                $_SESSION['error_message'] = 'Ошибка при сохранении диссертации в базу данных.';
+                app()->route->redirect('/addDissertation');
+                return '';
             }
-            if (empty($data['student_id'])) {
-                $errors[] = 'Необходимо выбрать студента.';
-            }
-            if (empty($data['approval_date'])) {
-                $errors[] = 'Дата утверждения не может быть пустой.';
-            }
-            if (empty($data['dissertation_status_id'])) {
-                $errors[] = 'Необходимо выбрать статус диссертации.';
-            }
-            if (empty($data['bak_speciality_id'])) {
-                $errors[] = 'Необходимо выбрать специальность ВАК.';
-            }
-
-            if (empty($errors)) {
-                $dissertationData = [
-                    'theme' => $data['theme'],
-                    'approval_date' => $data['approval_date'],
-                    'status_id' => $data['dissertation_status_id'],
-                    'bak_speciality_id' => $data['bak_speciality_id'],
-                    'student_id' => $data['student_id'],
-                ];
-
-                if (Dissertations::create($dissertationData)) {
-                    if (session_status() === PHP_SESSION_NONE) {
-                        session_start();
-                    }
-                    $_SESSION['success_message'] = 'Диссертация успешно добавлена!';
-                    app()->route->redirect('/dissertations');
-                    return '';
-                } else {
-                    $errors[] = 'Ошибка при сохранении диссертации в базу данных.';
-                }
-            }
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
-            $_SESSION['error_message'] = implode('<br>', $errors);
-            app()->route->redirect('/addDissertation');
-            return '';
         }
         $bak_specialities = BAKSpeciality::all();
         $statuses = DissertationStatus::all();
 //        $students = Student::all();
         $studentsWithDissertations = Dissertations::pluck('student_id')->toArray();
         $students = Student::whereNotIn('student_id', $studentsWithDissertations)->get();
-
+        $errors = [];
+        if (isset($_SESSION['error_message'])) {
+            $errors = explode('<br>', $_SESSION['error_message']);
+            unset($_SESSION['error_message']);
+        }
+        $message = $_SESSION['success_message'] ?? null;
+        unset($_SESSION['success_message']);
         return new View('site.add_dissertation', [
             'students' => $students,
             'errors' => $errors,
             'message' => $message,
             'bak_specialities' => $bak_specialities,
             'statuses' => $statuses,
-
         ]);
     }
 
-    public function updateDissertationStatus(Request $request){
+
+    public
+    function updateDissertationStatus(Request $request)
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
         if ($request->method === 'POST') {
             $dissertationId = $request->get('dissertation_id');
             $newStatusId = $request->get('dissertation_status_id');
 
-            if (empty($dissertationId) || empty($newStatusId)) {
-                $_SESSION['error_message'] = 'Недостаточно данных для обновления статуса диссертации.';
+            $validator = new Validator($request->all(), [
+                'dissertation_id' => ['required'],
+                'dissertation_status_id' => ['required']
+            ], [
+                'required' => 'Недостаточно данных для обновления статуса диссертации.',
+            ]);
+            if ($validator->fails()) {
+                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
                 app()->route->redirect('/dissertations');
                 return '';
             }
-
             $dissertation = Dissertations::find($dissertationId);
-
             if (!$dissertation) {
                 $_SESSION['error_message'] = 'Диссертация не найдена.';
                 app()->route->redirect('/dissertations');
                 return '';
             }
-
             $dissertation->status_id = $newStatusId;
             if ($dissertation->save()) {
                 $_SESSION['success_message'] = 'Статус диссертации успешно обновлен!';
@@ -131,6 +132,65 @@ class DissertationsController
                 $_SESSION['error_message'] = 'Ошибка при обновлении статуса диссертации.';
             }
         }
+        app()->route->redirect('/dissertations');
+        return '';
+    }
+
+    public
+    function uploadDissertationFile(Request $request)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if ($request->method === 'POST') {
+            $dissertationId = $request->get('dissertation_id');
+            $file = $_FILES['dissertation_file'] ?? null;
+
+            $validator = new Validator(['dissertation_id' => $dissertationId], [
+                'dissertation_id' => ['required'],
+            ], [
+                'required' => 'Идентификатор диссертации не указан.',
+            ]);
+
+            if ($validator->fails() || !$file || $file['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['error_message'] = $validator->fails()
+                    ? implode('<br>', array_reduce($validator->errors(), 'array_merge', []))
+                    : 'Произошла ошибка загрузки файла.';
+                app()->route->redirect('/dissertations');
+                return '';
+            }
+
+            $dissertation = Dissertations::find($dissertationId);
+            if (!$dissertation) {
+                $_SESSION['error_message'] = 'Диссертация не найдена.';
+                app()->route->redirect('/dissertations');
+                return '';
+            }
+
+            $originalFileName = basename($file['name']);
+            $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+            $uniqueFileName = uniqid('dissertation_') . '.' . $fileExtension;
+            $targetFilePath = self::UPLOAD_DIR . $uniqueFileName;
+
+            if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+                // Save file metadata to database
+                DissertationFile::create([
+                    'dissertation_id' => $dissertationId,
+                    'file_name' => $originalFileName,
+                    'file_path' => '/uploads/dissertations/' . $uniqueFileName,
+                    'file_type' => $file['type'],
+                    'file_size' => $file['size'],
+                ]);
+
+                $_SESSION['success_message'] = 'Файл успешно загружен!';
+            } else {
+                $_SESSION['error_message'] = 'Ошибка при сохранении файла на сервере.';
+            }
+        } else {
+            $_SESSION['error_message'] = 'Неверный метод запроса для загрузки файла.';
+        }
+
         app()->route->redirect('/dissertations');
         return '';
     }
