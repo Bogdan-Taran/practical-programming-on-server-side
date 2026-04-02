@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Validators\Request\DeleteScientificPublicationValidator;
 use Validators\Request\ScientificPublicationValidator;
 use Model\Editions;
 use Model\Indexes;
@@ -160,17 +161,9 @@ class ScientificPublicationsController
             $data = $request->all();
             $publicationId = $data['scientific_publication_id'] ?? null;
 
-            $validator = new Validator($data, [
-                'scientific_publication_id' => ['required'],
-            ], [
-                'required' => 'Идентификатор публикации не указан для удаления.',
-            ]);
+            $validator = new DeleteScientificPublicationValidator($data);
+            $validator->validateAndRedirect('/scientificPublications');
 
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/scientificPublications');
-                return '';
-            }
 
             $publication = ScientificPublications::find($publicationId);
 
