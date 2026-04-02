@@ -2,14 +2,14 @@
 
 namespace Controller;
 
-
+use Validators\Request\AddScientificSupervisorValidator;
+use Validators\Request\AddStudentValidator;
 use Model\User;
 use Src\View;
 use Model\AcademicDegree;
 use Model\Student;
 use Model\Group;
 use Model\Specialization;
-use Src\Validator\Validator;
 class AdminController extends Site
 {
 
@@ -23,22 +23,9 @@ class AdminController extends Site
             //Validation
             $requestData = $_POST;
 
-            $validator = new Validator($requestData, [
-                'login' => ['required', 'unique:users,login'],
-                'password' => ['required'],
-                'firstname' => ['required'],
-                'lastname' => ['required'],
-                'patronymic' => ['required'],
-                'academic_degree_id' => ['required']
-            ], [
-                'required' => 'Поле :field не может быть пустым',
-                'unique' => 'Пользователь с таким :field уже существует'
-            ]);
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/addScientificSupervisor');
-                return '';
-            }
+            $validator = new AddScientificSupervisorValidator($requestData);
+            $validator->validateAndRedirect('/addScientificSupervisor');
+
             $user = new User();
             $user->login = $requestData['login'];
             $user->password_hash = password_hash($requestData['password'], PASSWORD_DEFAULT);
@@ -80,21 +67,9 @@ class AdminController extends Site
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $requestData = $_POST;
-            $validator = new Validator($requestData, [
-                'firstname' => ['required'],
-                'lastname' => ['required'],
-                'patronymic' => ['required'],
-                'group_id' => ['required'],
-                'specialization_id' => ['required'],
-                'scientific_supervisor_id' => ['required']
-            ], [
-                'required' => 'Поле :field не может быть пустым',
-            ]);
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/addStudent');
-                return '';
-            }
+            $validator = new AddStudentValidator($requestData);
+            $validator->validateAndRedirect('/addStudent');
+
             $student = new Student();
             $student->firstname = $requestData['firstname'];
             $student->lastname = $requestData['lastname'];

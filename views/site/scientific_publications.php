@@ -14,11 +14,11 @@
 <div id="popup-message" class="popup <?= isset($message) && !isset($error) ? 'show success' : '' ?> <?= isset($error) && $error ? 'show error' : '' ?>">
     <?= $message ?? '' ?>
 </div>
-<h1><?= $error ?></h1>
 
 <div id="add_scientific_publications_container" class="add_scientific_publications_container" hidden="hidden">
     <form method="post" action="<?= app()->route->getUrl('/addScientificPublication') ?>">
         <h1>Добавить научную публикацию</h1>
+
         <div class="form-group">
             <input type="text" name="name" required placeholder=" " value="<?= $_POST['name'] ?? '' ?>">
             <label for="name">Название научной публикации:</label>
@@ -58,6 +58,16 @@
             </select>
             <label for="student_id_add">Студент:</label>
         </div>
+        <?php if (!empty($error)): ?>
+            <div class="error-container">
+                <p><strong>Ошибки валидации:</strong></p>
+                <ul>
+                    <?php foreach ($error as $err): ?>
+                        <?php if(!empty($err)): ?><li><?php echo htmlspecialchars($err); ?></li><?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
         <button type="submit">Добавить</button>
     </form>

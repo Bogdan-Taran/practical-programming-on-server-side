@@ -17,6 +17,8 @@
 <!--        --><?php //= $message ?? '' ?>
 <!--    </div>-->
 
+
+
         <form id="addSupervisorForm" method="post" action="/addScientificSupervisor">
             <h1>Добавить научного руководителя</h1>
 
@@ -54,7 +56,16 @@
                 </select>
                 <label for="academic_degree_id">Ученая степень:</label>
             </div>
-
+            <?php if (!empty($errors)): ?>
+                <div class="error-container">
+                    <p><strong>Ошибки валидации:</strong></p>
+                    <ul>
+                        <?php foreach ($errors as $error): ?>
+                            <?php if(!empty($error)): ?><li><?php echo htmlspecialchars($error); ?></li><?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <button type="submit">Добавить</button>
         </form>
 

@@ -2,13 +2,13 @@
 
 namespace Controller;
 
+use Validators\Request\ScientificPublicationValidator;
 use Model\Editions;
 use Model\Indexes;
 use Model\ScientificPublications;
 use Model\Student;
 use Src\Request;
 use Src\View;
-use Src\Validator\Validator;
 
 class ScientificPublicationsController
 {
@@ -42,21 +42,9 @@ class ScientificPublicationsController
         if ($request->method === 'POST') {
             $data = $request->all();
 
-            $validator = new Validator($data, [
-                'name' => ['required'],
-                'edition_id' => ['required'],
-                'publication_date' => ['required'],
-                'index_id' => ['required'],
-                'student_id' => ['required']
-            ], [
-                'required' => 'Поле :field не может быть пустым.',
-            ]);
+            $validator = new ScientificPublicationValidator($data);
+            $validator->validateAndRedirect('/scientificPublications');
 
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/scientificPublications');
-                return '';
-            }
             $scientificPublicationData = [
                 'name' => $data['name'],
                 'edition_id' => $data['edition_id'],
@@ -124,22 +112,8 @@ class ScientificPublicationsController
                 return '';
             }
 
-
-            $validator = new Validator($data, [
-                'name' => ['required'],
-                'edition_id' => ['required'],
-                'publication_date' => ['required'],
-                'index_id' => ['required'],
-                'student_id' => ['required']
-            ], [
-                'required' => 'Поле :field не может быть пустым.',
-            ]);
-
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/scientificPublications');
-                return '';
-            }
+            $validator = new ScientificPublicationValidator($data);
+            $validator->validateAndRedirect('/scientificPublications');
 
             $publication->name = $data['name'];
             $publication->edition_id = $data['edition_id'];

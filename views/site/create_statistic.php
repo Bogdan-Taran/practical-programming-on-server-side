@@ -16,6 +16,7 @@
 </div>
 <div class="create-statistic-container">
     <h1>Формирование отчета по количеству защит за период</h1>
+
     <form method="post" action="<?= app()->route->getUrl('/createStatistic') ?>">
         <input hidden="hidden" name="create_statistic">
         <div class="create-statistic-dates-pickers">
@@ -28,6 +29,16 @@
                 <label for="end_date">Конечная дата:</label>
             </div>
         </div>
+        <?php if (!empty($errors)): ?>
+            <div class="error-container">
+                <p><strong>Ошибки валидации:</strong></p>
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <?php if(!empty($error)): ?><li><?php echo htmlspecialchars($error); ?></li><?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
         <button type="submit">Сформировать отчёт</button>
         <table>

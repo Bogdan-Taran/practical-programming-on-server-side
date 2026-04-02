@@ -2,13 +2,12 @@
 
 namespace Controller;
 
-
+use Validators\Request\StatisticValidator;
 use Model\Dissertations;
 use Model\Editions;
 use Model\Indexes;
 use Model\ScientificPublications;
 use Model\Student;
-use Src\Validator\Validator;
 use Src\View;
 use Src\Request;
 
@@ -20,18 +19,9 @@ class StatisticController
 
         if ($request->method === 'POST') {
             $data = $request->all();
-            $validator = new Validator($data, [
-                'start_date' => ['required'],
-                'end_date' => ['required']
-            ], [
-                'required' => 'Поле :field не может быть пустым.',
-            ]);
 
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/createStatistic');
-                return '';
-            }
+            $validator = new StatisticValidator($data);
+            $validator->validateAndRedirect('/createStatistic');
 
             $startDate = $data['start_date'];
             $endDate = $data['end_date'];

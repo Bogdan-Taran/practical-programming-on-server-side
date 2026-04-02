@@ -11,13 +11,7 @@
 </head>
 <body>
 <div class="add-dissertation-container">
-    <?php if (!empty($errors)): ?>
-        <div class="error">
-            <?php foreach ($errors as $error): ?>
-                <p><?php echo $error; ?></p>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+
 
     <?php if (!empty($message)): ?>
         <div class="success">
@@ -67,6 +61,16 @@
             </select>
             <label for="student_id">Студент:</label>
         </div>
+        <?php if (!empty($errors)): ?>
+            <div class="error-container">
+                <p><strong>Ошибки валидации:</strong></p>
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <?php if(!empty($error)): ?><li><?php echo htmlspecialchars($error); ?></li><?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
         <button type="submit">Добавить</button>
     </form>

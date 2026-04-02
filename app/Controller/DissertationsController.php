@@ -10,6 +10,7 @@ use Src\Request;
 use Src\View;
 use Model\DissertationFile;
 use Src\Validator\Validator;
+use Validators\Request\AddDissertationValidator;
 
 class DissertationsController
 {
@@ -56,20 +57,8 @@ class DissertationsController
     {
         if ($request->method === 'POST') {
             $data = $request->all();
-            $validator = new Validator($data, [
-                'theme' => ['required'],
-                'student_id' => ['required'],
-                'approval_date' => ['required'],
-                'dissertation_status_id' => ['required'],
-                'bak_speciality_id' => ['required']
-            ], [
-                'required' => 'Поле :field не может быть пустым.',
-            ]);
-            if ($validator->fails()) {
-                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
-                app()->route->redirect('/addDissertation');
-                return '';
-            }
+            $validator = new AddDissertationValidator($data);
+            $validator->validateAndRedirect('/addDissertation');
             $dissertationData = [
                 'theme' => $data['theme'],
                 'approval_date' => $data['approval_date'],

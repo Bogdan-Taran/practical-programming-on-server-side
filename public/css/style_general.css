@@ -139,3 +139,22 @@ button:hover, .add-user-link:hover, .add-dissertations-link:hover {
     background-color: #dc3545; /* Красный цвет для ошибки */
     transform: translateY(0); /* Ошибки показываем сразу */
 }
+
+.error-container {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.error-container ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.error-container p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
