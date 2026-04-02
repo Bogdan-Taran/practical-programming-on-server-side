@@ -158,8 +158,16 @@ class DissertationsController
             $dissertationId = $request->get('dissertation_id');
             $file = $_FILES['dissertation_file'] ?? null;
 
-            if (empty($dissertationId) || !$file || $file['error'] !== UPLOAD_ERR_OK) {
-                $_SESSION['error_message'] = 'Произошла ошибка загрузки';
+            $validator = new Validator(['dissertation_id' => $dissertationId], [
+                'dissertation_id' => ['required'],
+            ], [
+                'required' => 'Идентификатор диссертации не указан.',
+            ]);
+
+            if ($validator->fails() || !$file || $file['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['error_message'] = $validator->fails()
+                    ? implode('<br>', array_reduce($validator->errors(), 'array_merge', []))
+                    : 'Произошла ошибка загрузки файла.';
                 app()->route->redirect('/dissertations');
                 return '';
             }
