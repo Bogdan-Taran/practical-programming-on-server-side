@@ -80,7 +80,7 @@
                         <form action="<?= app()->route->getUrl('/uploadDissertationFile') ?>" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="dissertation_id" value="<?= $dissertation->dissertation_id ?>">
                             <input type="file" name="dissertation_file" required>
-                            <label>Выберите один или несколько файлов</label>
+                            <label>Выберите один файл</label>
                             <button type="submit">Загрузить</button>
                         </form>
                     </div>
