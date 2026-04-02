@@ -1,0 +1,48 @@
+.hello-container{
+    background: rgb(248, 249, 233);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 80vw;
+    margin: 20px auto; /* Center the container horizontally */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100%; /* Use 100% width within max-width */
+
+}
+
+.actions-container{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
+    gap: 20px; /* Add some gap between grid items */
+    justify-items: center; /* Center grid items horizontally */
+}
+.action-item{
+    text-decoration: none;
+    width: 80%;
+    padding: 22px;
+    background-color: #325a7c;
+    color: white;
+    border: solid 3px #7897ac;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center; /* Center text within the action item */
+    transform: scale(1); /* Initial scale for smooth transition */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+}
+.action-item:hover{
+    background-color: #457ba8; /* Lighter blue on hover */
+    border-color: #9abed6; /* Slightly lighter border on hover */
+    transform: scale(1.05);
+}
+.greeting-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.searchbar-hello{
+    align-self: center;
+}

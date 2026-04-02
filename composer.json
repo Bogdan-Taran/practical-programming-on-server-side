@@ -3,6 +3,11 @@
     "description": "A learning project to teach programming in php",
     "type": "project",
     "license": "MIT",
+    "config": {
+      "platform": {
+        "php": "8.3"
+      }
+    },
     "authors": [
         {
             "name": "Bogdan-Taran",
@@ -11,12 +16,17 @@
     ],
     "minimum-stability": "dev",
     "require": {
-      "php": "^7.4 | ^8.0"
+      "php": "^7.4 | ^8.0",
+        "illuminate/database": "12.x-dev",
+        "illuminate/events": "12.x-dev",
+        "nikic/fast-route": "^2.0@dev"
     },
     "autoload": {
       "psr-4": {
-        "Src\\": "core/Src/",
-        "": "app/"
+        "Src\\": "core/Src",
+        "": "app/",
+        "Model\\": "app/Model/",
+        "Controller\\": "app/Controller/"
       }
     }
 

@@ -1,0 +1,42 @@
+.scientific-publications-container{
+    background: rgb(248, 249, 233);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 80vw;
+    margin: 20px auto; /* Center the container horizontally */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100vw; /* Use 100% width within max-width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add_scientific_publications_container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    border-radius: 15px;
+    z-index: 1000; /* Increased z-index to ensure it's above other content */
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+.delete-scientific-publication-button, .delete_scientific_publications_button {
+    background-color: #dc3545; /* Red color for delete */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-left: 5px;
+}
+
+.delete-scientific-publication-button:hover, .delete_scientific_publications_button:hover {
+    background-color: #c82333;
+}

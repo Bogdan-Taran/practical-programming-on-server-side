@@ -1,0 +1,16 @@
+.form-container p{
+    text-align: center;
+    margin-top: 15px;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-container p a {
+    color: #325a7c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-container p a:hover {
+    text-decoration: underline;
+}

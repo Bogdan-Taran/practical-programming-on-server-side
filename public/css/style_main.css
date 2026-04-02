@@ -1,0 +1,40 @@
+body{
+    font-family: Arial, sans-serif;
+    background-image: url("/imgs/scientific_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+nav{
+    /*background-color: rgba(0, 0, 0, 0.7);*/
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 50px;
+}
+nav a {
+    color: #223a52;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding: 20px;
+    box-sizing: border-box;
+}
