@@ -18,6 +18,7 @@
 
     <form method="post">
         <h1>Авторизация</h1>
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <div class="form-group">
             <input type="text" name="login" placeholder=" " required>
             <label>Логин</label>

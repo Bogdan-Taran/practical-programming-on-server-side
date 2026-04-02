@@ -14,6 +14,7 @@
 <form method="post">
     <h1>Регистрация нового пользователя</h1>
     <h3 class="message"><?= $message ?? ''; ?></h3>
+    <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
     <div class="form-group">
         <input type="text" required name="lastname" placeholder=" " value="<?= $_POST['lastname'] ?? '' ?>">
         <label>Фамилия</label>
