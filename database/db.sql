@@ -142,6 +142,7 @@ INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VA
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('2', 'Доктор наук');
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('3', 'Доцент');
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('4', 'Профессор');
+INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('5', 'Нет учёной степени');
 
 INSERT INTO `users_roles` (`user_role_id`, `role_name`) VALUES ('1', 'Научный руководитель');
 INSERT INTO `users_roles` (`user_role_id`, `role_name`) VALUES ('2', 'Научный сотрудник');

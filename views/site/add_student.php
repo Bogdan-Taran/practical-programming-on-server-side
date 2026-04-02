@@ -22,11 +22,7 @@
             </div>
         <?php endif; ?>
 
-        <?php if ($success): ?>
-            <div class="success">
-                <p>Пользователь успешно добавлен!</p>
-            </div>
-        <?php endif; ?>
+
 
         <form id="addUserForm" method="POST" action="/addStudent">
             <h1>Добавить студента</h1>
