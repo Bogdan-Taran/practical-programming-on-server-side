@@ -186,8 +186,14 @@ class ScientificPublicationsController
             $data = $request->all();
             $publicationId = $data['scientific_publication_id'] ?? null;
 
-            if (!$publicationId) {
-                $_SESSION['error_message'] = 'Идентификатор публикации не указан для удаления.';
+            $validator = new Validator($data, [
+                'scientific_publication_id' => ['required'],
+            ], [
+                'required' => 'Идентификатор публикации не указан для удаления.',
+            ]);
+
+            if ($validator->fails()) {
+                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
                 app()->route->redirect('/scientificPublications');
                 return '';
             }
