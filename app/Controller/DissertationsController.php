@@ -115,25 +115,27 @@ class DissertationsController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
         if ($request->method === 'POST') {
             $dissertationId = $request->get('dissertation_id');
             $newStatusId = $request->get('dissertation_status_id');
 
-            if (empty($dissertationId) || empty($newStatusId)) {
-                $_SESSION['error_message'] = 'Недостаточно данных для обновления статуса диссертации.';
+            $validator = new Validator($request->all(), [
+                'dissertation_id' => ['required'],
+                'dissertation_status_id' => ['required']
+            ], [
+                'required' => 'Недостаточно данных для обновления статуса диссертации.',
+            ]);
+            if ($validator->fails()) {
+                $_SESSION['error_message'] = implode('<br>', array_reduce($validator->errors(), 'array_merge', []));
                 app()->route->redirect('/dissertations');
                 return '';
             }
-
             $dissertation = Dissertations::find($dissertationId);
-
             if (!$dissertation) {
                 $_SESSION['error_message'] = 'Диссертация не найдена.';
                 app()->route->redirect('/dissertations');
                 return '';
             }
-
             $dissertation->status_id = $newStatusId;
             if ($dissertation->save()) {
                 $_SESSION['success_message'] = 'Статус диссертации успешно обновлен!';
