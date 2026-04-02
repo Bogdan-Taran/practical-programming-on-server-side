@@ -187,7 +187,7 @@ class DissertationsController
                 DissertationFile::create([
                     'dissertation_id' => $dissertationId,
                     'file_name' => $originalFileName,
-                    'file_path' => '/uploads/dissertations/' . $uniqueFileName, // Path relative to web root
+                    'file_path' => '/uploads/dissertations/' . $uniqueFileName,
                     'file_type' => $file['type'],
                     'file_size' => $file['size'],
                 ]);

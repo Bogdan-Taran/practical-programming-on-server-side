@@ -77,9 +77,9 @@
                         <p>Файлов нет</p>
                     <?php endif; ?>
 
-                        <form action="<?= app()->route->getUrl('/uploadDissertationFile') ?>" enctype="multipart/form-data">
+                        <form action="<?= app()->route->getUrl('/uploadDissertationFile') ?>" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="dissertation_id" value="<?= $dissertation->dissertation_id ?>">
-                            <input type="file" name="dissertation_file" required placeholder=" ">
+                            <input type="file" name="dissertation_file" required>
                             <label>Выберите один или несколько файлов</label>
                             <button type="submit">Загрузить</button>
                         </form>
@@ -135,4 +135,11 @@
 
         // Hide status picker when clicking outside
         document.addEventListener('click', function (event) {
-            if (!statusPicker.contains(event.target) && !event.target.classList
+            if (!statusPicker.contains(event.target) && !event.target.classList.contains('change-dissertation-status')) {
+                statusPicker.classList.remove('show');
+            }
+        });
+    });
+</script>
+</body>
+</html>

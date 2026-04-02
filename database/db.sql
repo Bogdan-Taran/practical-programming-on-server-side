@@ -138,6 +138,21 @@ CREATE TABLE scientific_publications(
 	ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
+
+CREATE TABLE dissertation_files(
+    file_id INT AUTO_INCREMENT PRIMARY KEY,
+    dissertation_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    file_type VARCHAR(255) NOT NULL,
+    file_size INT NOT NULL,
+
+    CONSTRAINT dissertation_id_fk
+    FOREIGN KEY (dissertation_id)
+    REFERENCES dissertations(dissertation_id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('1', 'Кандидат наук');
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('2', 'Доктор наук');
 INSERT INTO `academic_degrees` (`academic_degree_id`, `academic_degree_name`) VALUES ('3', 'Доцент');
