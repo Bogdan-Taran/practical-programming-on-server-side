@@ -1,8 +1,6 @@
 <?php
 
-namespace Validators\Request;
-
-use Validators\Request\AppValidator;
+namespace PopItMvc\Validator\Request;
 
 class AddStudentValidator extends AppValidator
 {

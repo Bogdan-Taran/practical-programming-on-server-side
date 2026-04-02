@@ -20,7 +20,8 @@
         "illuminate/database": "12.x-dev",
         "illuminate/events": "12.x-dev",
         "nikic/fast-route": "^2.0@dev",
-        "bogdan-taran/collect": "dev-master"
+        "bogdan-taran/collect": "dev-master",
+        "pop-it-mvc/validator": "dev-fourth_task"
     },
     "autoload": {
       "psr-4": {
@@ -29,6 +30,11 @@
         "Model\\": "app/Model/",
         "Controller\\": "app/Controller/"
       }
-    }
-
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/validator"
+        }
+    ]
 }

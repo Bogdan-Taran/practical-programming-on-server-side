@@ -9,17 +9,12 @@ return [
         'admin' => \Middlewares\AdminMiddleware::class,
     ],
     'validators' => [
-        'required' => \Validators\RequireValidator::class,
-        'unique' => \Validators\UniqueValidator::class
+        'required' => \PopItMvc\Validator\RequireValidator::class,
+        'unique' => \PopItMvc\Validator\UniqueValidator::class
     ],
     'routeAppMiddleware' => [
         'csrf' => \Middlewares\CSRFMiddleware::class,
         'trim' => \Middlewares\TrimMiddleware::class,
         'specialChars' => \Middlewares\SpecialCharsMiddleware::class,
     ],
-
-
-
-
-
 ];

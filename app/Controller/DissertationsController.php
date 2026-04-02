@@ -6,11 +6,11 @@ use Model\BAKSpeciality;
 use Model\Dissertations;
 use Model\DissertationStatus;
 use Model\Student;
+use PopItMvc\Validator\Request\AddDissertationValidator;
+use PopItMvc\Validator\Validator;
 use Src\Request;
 use Src\View;
 use Model\DissertationFile;
-use Src\Validator\Validator;
-use Validators\Request\AddDissertationValidator;
 
 class DissertationsController
 {
@@ -145,6 +145,7 @@ class DissertationsController
 
         if ($request->method === 'POST') {
             $dissertationId = $request->get('dissertation_id');
+
             $file = $_FILES['dissertation_file'] ?? null;
 
             $validator = new Validator(['dissertation_id' => $dissertationId], [

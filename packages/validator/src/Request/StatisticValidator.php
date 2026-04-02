@@ -1,6 +1,6 @@
 <?php
 
-namespace Validators\Request;
+namespace PopItMvc\Validator\Request;
 
 class StatisticValidator extends AppValidator
 {

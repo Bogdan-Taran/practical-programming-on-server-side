@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Validators\Request\StatisticValidator;
+use PopItMvc\Validator\Request\StatisticValidator;
 use Model\Dissertations;
 use Model\Editions;
 use Model\Indexes;
