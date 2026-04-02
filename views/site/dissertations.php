@@ -32,7 +32,7 @@
     <h1>Диссертации</h1>
     <div class="manipulate-container">
         <div class="searchbar-search">
-            <form action="/search" method="GET" style="width: 100%; align-self: center">
+            <form action="<?= app()->route->getUrl('/dissertations') ?>" method="GET">
                 <input type="text" name="search-file-query" placeholder="Поиск документов по названию"
                        value="<?= $searchQuery ?? '' ?>">
                 <button type="submit">Поиск</button>
@@ -69,8 +69,18 @@
                 <td><?= $dissertation->bakSpeciality->bak_speciality_name ?></td>
                 <td>
                     <div class="upload-file-form">
-                        <form >
-                            <input type="file" name="file-upload">
+                    <?php if (!empty($dissertation->files)): ?>
+                        <?php foreach ($dissertation->files as $file): ?>
+                            <a href="<?= $file->file_path ?>" target="_blank"><?= $file->file_name ?></a><br>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Файлов нет</p>
+                    <?php endif; ?>
+
+                        <form action="<?= app()->route->getUrl('/uploadDissertationFile') ?>" enctype="multipart/form-data">
+                            <input type="hidden" name="dissertation_id" value="<?= $dissertation->dissertation_id ?>">
+                            <input type="file" name="dissertation_file" required placeholder=" ">
+                            <label>Выберите один или несколько файлов</label>
                             <button type="submit">Загрузить</button>
                         </form>
                     </div>

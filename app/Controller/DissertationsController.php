@@ -8,10 +8,13 @@ use Model\Student;
 use Model\User;
 use Src\Request;
 use Src\View;
+use Model\DissertationFile;
 
 
 class DissertationsController
 {
+    const UPLOAD_DIR = __DIR__ . '/../../public/uploads/dissertations/';
+
     public function dissertations(): string
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -22,12 +25,28 @@ class DissertationsController
         $error = $_SESSION['error_message'] ?? null;
         unset($_SESSION['error_message']);
 
-        //$dissertations = Dissertations::all();
+
         $dissertations = Dissertations::with(['status', 'bakSpeciality', 'student'])->get();
+        $searchQuery = $_GET['search-file-query'] ?? '';
+        $query = Dissertations::with(['status', 'bakSpeciality', 'student', 'files']);
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('theme', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhereHas('files', function ($fileQuery) use ($searchQuery) {
+                        $fileQuery->where('file_name', 'LIKE', '%' . $searchQuery . '%');
+                    });
+            });
+        }
+        $dissertations = $query->get();
         $statuses = DissertationStatus::all();
+        // Ensure upload directory exists
+        if (!is_dir(self::UPLOAD_DIR)) {
+            mkdir(self::UPLOAD_DIR, 0777, true);
+        }
         return new View('site.dissertations', [
             'dissertations' => $dissertations,
             'message' => $message,
+            'searchQuery' => $searchQuery, // Pass search query back to the view
             'error' => $error,
             'statuses' => $statuses,
         ]);
@@ -131,6 +150,56 @@ class DissertationsController
                 $_SESSION['error_message'] = 'Ошибка при обновлении статуса диссертации.';
             }
         }
+        app()->route->redirect('/dissertations');
+        return '';
+    }
+
+    public function uploadDissertationFile(Request $request)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if ($request->method === 'POST') {
+            $dissertationId = $request->get('dissertation_id');
+            $file = $_FILES['dissertation_file'] ?? null;
+
+            if (empty($dissertationId) || !$file || $file['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['error_message'] = 'Произошла ошибка загрузки';
+                app()->route->redirect('/dissertations');
+                return '';
+            }
+
+            $dissertation = Dissertations::find($dissertationId);
+            if (!$dissertation) {
+                $_SESSION['error_message'] = 'Диссертация не найдена.';
+                app()->route->redirect('/dissertations');
+                return '';
+            }
+
+            $originalFileName = basename($file['name']);
+            $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+            $uniqueFileName = uniqid('dissertation_') . '.' . $fileExtension;
+            $targetFilePath = self::UPLOAD_DIR . $uniqueFileName;
+
+            if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+                // Save file metadata to database
+                DissertationFile::create([
+                    'dissertation_id' => $dissertationId,
+                    'file_name' => $originalFileName,
+                    'file_path' => '/uploads/dissertations/' . $uniqueFileName, // Path relative to web root
+                    'file_type' => $file['type'],
+                    'file_size' => $file['size'],
+                ]);
+
+                $_SESSION['success_message'] = 'Файл успешно загружен!';
+            } else {
+                $_SESSION['error_message'] = 'Ошибка при сохранении файла на сервере.';
+            }
+        } else {
+            $_SESSION['error_message'] = 'Неверный метод запроса для загрузки файла.';
+        }
+
         app()->route->redirect('/dissertations');
         return '';
     }
