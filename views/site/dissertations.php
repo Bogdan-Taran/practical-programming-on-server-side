@@ -30,7 +30,17 @@
 </div>
 <div class="dissertations-container">
     <h1>Диссертации</h1>
-    <a class="add-dissertations-link" href="<?= app()->route->getUrl('/addDissertation') ?>">+ Добавить диссертацию</a>
+    <div class="manipulate-container">
+        <div class="searchbar-search">
+            <form action="/search" method="GET" style="width: 100%; align-self: center">
+                <input type="text" name="search-file-query" placeholder="Поиск документов по названию"
+                       value="<?= $searchQuery ?? '' ?>">
+                <button type="submit">Поиск</button>
+            </form>
+        </div>
+        <a class="add-dissertations-link" href="<?= app()->route->getUrl('/addDissertation') ?>">+ Добавить диссертацию</a>
+    </div>
+
     <table>
         <thead>
         <tr>
@@ -39,6 +49,7 @@
             <th>Статус</th>
             <th>Студент</th>
             <th>Специальность ВАК</th>
+            <th>Загруженные файлы</th>
         </tr>
         </thead>
         <?php if (empty($dissertations)): ?>
@@ -56,6 +67,16 @@
                 <td class="change-dissertation-status" data-dissertation-id="<?= $dissertation->dissertation_id ?>" data-current-status-id="<?= $dissertation->status->dissertation_status_id ?>"><?= $dissertation->status->dissertation_status_name ?></td>
                 <td><?= $dissertation->student->lastname ?> <?= $dissertation->student->firstname ?></td>
                 <td><?= $dissertation->bakSpeciality->bak_speciality_name ?></td>
+                <td>
+                    <div class="upload-file-form">
+                        <form >
+                            <input type="file" name="file-upload">
+                            <button type="submit">Загрузить</button>
+                        </form>
+                    </div>
+
+                </td>
+                
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -104,11 +125,4 @@
 
         // Hide status picker when clicking outside
         document.addEventListener('click', function (event) {
-            if (!statusPicker.contains(event.target) && !event.target.classList.contains('change-dissertation-status')) {
-                statusPicker.classList.remove('show');
-            }
-        });
-    });
-</script>
-</body>
-</html>
+            if (!statusPicker.contains(event.target) && !event.target.classList

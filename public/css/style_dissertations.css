@@ -68,3 +68,47 @@ table tbody tr td:nth-child(3):hover{
 .status-picker button:hover {
     background-color: #457ba8;
 }
+
+.manipulate-container{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20%;
+}
+
+.searchbar-search{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+button {
+    width: 15rem;
+    padding: 1rem;
+    background-color: #325a7c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    background: rgb(248, 249, 233);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 80%;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
