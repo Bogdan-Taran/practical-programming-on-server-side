@@ -44,18 +44,17 @@
         <label>Роль</label>
     </div>
     <div class="form-group">
-        <select name="academic_degree_id" required>
-            <option value="" disabled selected></option>
-            <option value="1">Кандидат наук </option>
-            <option value="2">Доктор наук</option>
-            <option value="3">Доцент</option>
-            <option value="3">Профессор</option>
+        <select id="academic_degree_id" name="academic_degree_id" required>
+            <option value="" disabled selected>Выберите степень</option>
+            <?php foreach ($academic_degrees as $degree): ?>
+                <option value="<?php echo $degree->academic_degree_id; ?>" <?= (($_POST['academic_degree_id'] ?? '') == $degree->academic_degree_id) ? 'selected' : '' ?>><?php echo $degree->academic_degree_name; ?></option>
+            <?php endforeach; ?>
         </select>
-        <label>Ученая степень</label>
+        <label for="academic_degree_id">Ученая степень:</label>
     </div>
     <?php if (!empty($errors)): ?>
         <ul class="errors">
-            <?php foreach ($errors as $field => $fieldErrors): ?>
+            <?php foreach ($errors as $fieldErrors): ?>
                 <?php foreach ($fieldErrors as $error): ?>
                     <li><?= $error ?></li>
                 <?php endforeach; ?>

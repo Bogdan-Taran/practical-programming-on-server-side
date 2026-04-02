@@ -103,7 +103,11 @@ class Site
                 app()->route->redirect('/login');
             }
         }
-        return new View('site.signup');
+        $academic_degrees = AcademicDegree::all();
+
+        return (new View())->render('site.signup', [
+            'academic_degrees' => $academic_degrees,
+        ]);
     }
 
     public function adminPanel(): string
