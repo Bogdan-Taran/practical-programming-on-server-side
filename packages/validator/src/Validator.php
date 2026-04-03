@@ -1,5 +1,5 @@
 <?php
-namespace Src\Validator;
+namespace PopItMvc\Validator;
 
 class Validator
 {
@@ -52,7 +52,7 @@ class Validator
                 $fieldName,
                 $this->fields[$fieldName],
                 $args,
-                $this->messages[$validatorName]);
+                $this->messages[$validatorName] ?? '');
 
             //Если валидация не прошла, то добавляем ошибку в общий массив ошибок
             if (!$validator->rule()) {
@@ -72,5 +72,12 @@ class Validator
     {
         return (bool)count($this->errors);
     }
-}
 
+    public function validateAndRedirect(string $redirectUrl): void
+    {
+        if ($this->fails()) {
+            $_SESSION['error_message'] = implode('<br>', array_reduce($this->errors(), 'array_merge', []));
+            app()->route->redirect($redirectUrl);
+        }
+    }
+}

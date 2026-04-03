@@ -1,11 +1,8 @@
 <?php
-namespace Validators;
-
-use Src\Validator\AbstractValidator;
+namespace PopItMvc\Validator;
 
 class RequireValidator extends AbstractValidator
 {
-
     protected string $message = 'Field :field is required';
 
     public function rule(): bool

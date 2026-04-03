@@ -2,8 +2,8 @@
 
 namespace Controller;
 
-use Validators\Request\DeleteScientificPublicationValidator;
-use Validators\Request\ScientificPublicationValidator;
+use PopItMvc\Validator\Request\DeleteScientificPublicationValidator;
+use PopItMvc\Validator\Request\ScientificPublicationValidator;
 use Model\Editions;
 use Model\Indexes;
 use Model\ScientificPublications;

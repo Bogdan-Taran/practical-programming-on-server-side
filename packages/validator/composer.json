@@ -1,0 +1,21 @@
+{
+    "name": "pop-it-mvc/validator",
+    "description": "A simple validator component for the Pop-it-mvc framework.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bogdan",
+            "email": "taranbogdan9.2@mail.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PopItMvc\\Validator\\": "src/"
+        }
+    }
+}

@@ -1,8 +1,8 @@
 <?php
 
-namespace Validators\Request;
+namespace PopItMvc\Validator\Request;
 
-use Src\Validator\Validator;
+use PopItMvc\Validator\Validator;
 
 abstract class AppValidator
 {

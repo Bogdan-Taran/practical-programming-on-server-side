@@ -2,8 +2,8 @@
 
 namespace Controller;
 
-use Validators\Request\AddScientificSupervisorValidator;
-use Validators\Request\AddStudentValidator;
+use PopItMvc\Validator\Request\AddScientificSupervisorValidator;
+use PopItMvc\Validator\Request\AddStudentValidator;
 use Model\User;
 use Src\View;
 use Model\AcademicDegree;

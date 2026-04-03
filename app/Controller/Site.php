@@ -5,9 +5,9 @@ use Model\AcademicDegree;
 use Model\Post;
 use Model\Student;
 use Model\User;
+use PopItMvc\Validator\Validator;
 use Src\Auth\Auth;
 use Src\Request;
-use Src\Validator\Validator;
 use Src\View;
 
 class Site
