@@ -16,19 +16,19 @@
     <h3 class="message"><?= $message ?? ''; ?></h3>
     <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
     <div class="form-group">
-        <input type="text" required name="lastname" placeholder=" " value="<?= $_POST['lastname'] ?? '' ?>">
+        <input type="text" required name="lastname" placeholder=" " value="<?= $lastname ?? '' ?>">
         <label>Фамилия</label>
     </div>
     <div class="form-group">
-        <input type="text" required name="firstname" placeholder=" " value="<?= $_POST['firstname'] ?? '' ?>">
+        <input type="text" required name="firstname" placeholder=" " value="<?= $firstname ?? '' ?>">
         <label>Имя</label>
     </div>
     <div class="form-group">
-        <input type="text" name="patronymic" placeholder=" " value="<?= $_POST['patronymic'] ?? '' ?>">
+        <input type="text" name="patronymic" placeholder=" " value="<?= $patronymic ?? '' ?>">
         <label>Отчество</label>
     </div>
     <div class="form-group">
-        <input type="text" required name="login" placeholder=" " value="<?= $_POST['login'] ?? '' ?>">
+        <input type="text" required name="login" placeholder=" " value="<?= $login ?? '' ?>">
         <label>Логин</label>
     </div>
     <div class="form-group">
@@ -38,8 +38,8 @@
     <div class="form-group">
         <select name="role_id" required>
             <option value="" disabled selected></option>
-            <option value="1">Руководитель</option>
-            <option value="2">Научный сотрудник</option>
+            <option value="1" <?= (($role_id ?? '') == 1) ? 'selected' : '' ?>>Руководитель</option>
+            <option value="2" <?= (($role_id ?? '') == 2) ? 'selected' : '' ?>>Научный сотрудник</option>
         </select>
         <label>Роль</label>
     </div>
@@ -47,7 +47,7 @@
         <select id="academic_degree_id" name="academic_degree_id" required>
             <option value="" disabled selected>Выберите степень</option>
             <?php foreach ($academic_degrees as $degree): ?>
-                <option value="<?php echo $degree->academic_degree_id; ?>" <?= (($_POST['academic_degree_id'] ?? '') == $degree->academic_degree_id) ? 'selected' : '' ?>><?php echo $degree->academic_degree_name; ?></option>
+                <option value="<?php echo $degree->academic_degree_id; ?>" <?= (($academic_degree_id ?? '') == $degree->academic_degree_id) ? 'selected' : '' ?>><?php echo $degree->academic_degree_name; ?></option>
             <?php endforeach; ?>
         </select>
         <label for="academic_degree_id">Ученая степень:</label>

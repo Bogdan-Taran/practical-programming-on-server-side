@@ -77,7 +77,9 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
   <component name="PhpStan">
     <PhpStan_settings>
       <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="6e6c6718-6c90-414d-ae4d-05479bb33404" timeout="60000" />
