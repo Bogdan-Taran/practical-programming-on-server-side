@@ -136,6 +136,12 @@ class DissertationsController
         return '';
     }
 
+    // Обертка для move_uploaded_file для возможности мокирования в тестах
+    protected function moveUploadedFile(string $from, string $to): bool
+    {
+        return move_uploaded_file($from, $to);
+    }
+
     public
     function uploadDissertationFile(Request $request)
     {
@@ -174,7 +180,7 @@ class DissertationsController
             $uniqueFileName = uniqid('dissertation_') . '.' . $fileExtension;
             $targetFilePath = self::UPLOAD_DIR . $uniqueFileName;
 
-            if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+            if ($this->moveUploadedFile($file['tmp_name'], $targetFilePath)) {
                 // Save file metadata to database
                 DissertationFile::create([
                     'dissertation_id' => $dissertationId,

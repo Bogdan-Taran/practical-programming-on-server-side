@@ -55,7 +55,7 @@ class View
             $content = ob_get_clean();
 
             //Возвращаем собранную страницу
-//            return require($this->getPathToMain());
+            //return require($this->getPathToMain());
             //Включаем буферизацию для основного шаблона
             ob_start();
             require($this->getPathToMain());
