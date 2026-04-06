@@ -32,15 +32,11 @@ class DissertationsControllerTest extends TestCase
             }
         }
 
-        // Убедимся, что директория для загрузок существует
-        if (!is_dir(DissertationsController::UPLOAD_DIR)) {
-            mkdir(DissertationsController::UPLOAD_DIR, 0777, true);
-        }
     }
 
     public function testUploadDissertationFile()
     {
-        // 1. Подготовка данных для теста
+        // Подготовка данных
         $this->student = Student::create([
             'firstname' => 'Тест',
             'lastname' => 'Тестов',
@@ -77,13 +73,13 @@ class DissertationsControllerTest extends TestCase
             ->with('dissertation_id')
             ->willReturn($this->dissertation->dissertation_id);
 
-        // 2. Выполнение тестируемого метода
+        // Выполнение тестируемого метода
         // Создаем частичный мок контроллера
         $controller = $this->getMockBuilder(DissertationsController::class)
             ->onlyMethods(['moveUploadedFile']) // Указываем, какой метод будем заменять
             ->getMock();
 
-        // "Обучаем" мок: наш новый метод всегда должен возвращать true
+        // наш новый метод всегда должен возвращать true
         $controller->expects($this->once())
             ->method('moveUploadedFile')
             ->willReturn(true);
@@ -91,18 +87,13 @@ class DissertationsControllerTest extends TestCase
         if (session_status() === PHP_SESSION_NONE) {
             @session_start();
         }
-        
-        // Вызываем метод, который теперь будет использовать нашу "поддельную" реализацию moveUploadedFile
+
         $controller->uploadDissertationFile($request);
 
-        // 3. Проверка результатов
+        // Проверка результатов
         $dissertationFile = DissertationFile::where('dissertation_id', $this->dissertation->dissertation_id)->first();
         $this->assertNotNull($dissertationFile, "Запись о файле не была создана в БД.");
         $this->assertEquals($fakeFileName, $dissertationFile->file_name);
-        
-        // Так как мы имитировали загрузку, файла на диске не будет. Проверять его наличие не нужно.
-        // $this->assertFileExists(...) - эта строка теперь не нужна
-
         $this->assertEquals('Файл успешно загружен!', $_SESSION['success_message']);
     }
 
