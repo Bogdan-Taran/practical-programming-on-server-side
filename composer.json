@@ -21,7 +21,7 @@
         "illuminate/events": "12.x-dev",
         "nikic/fast-route": "^2.0@dev",
         "bogdan-taran/collect": "dev-master",
-        "pop-it-mvc/validator": "dev-fourth_task"
+        "pop-it-mvc/validator": "dev-fifth-task-unit-tests"
     },
     "autoload": {
       "psr-4": {
@@ -36,5 +36,8 @@
             "type": "path",
             "url": "packages/validator"
         }
-    ]
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "12.5.x-dev"
+    }
 }

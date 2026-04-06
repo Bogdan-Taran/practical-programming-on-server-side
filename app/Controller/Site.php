@@ -101,6 +101,7 @@ class Site
                 }
                 $_SESSION['success_message'] = 'Вы успешно зарегистрированы!';
                 app()->route->redirect('/login');
+                return false;
             }
         }
         $academic_degrees = AcademicDegree::all();
