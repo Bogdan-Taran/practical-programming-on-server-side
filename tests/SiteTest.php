@@ -5,6 +5,7 @@ use Model\User;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Src\Request;
+use Src\Route;
 
 class SiteTest extends TestCase
 {
@@ -42,7 +43,6 @@ class SiteTest extends TestCase
 
         // Создаем заглушку для класса Request.
         $request = $this->createMock(Request::class);
-        // Переопределяем метод all() и свойство method
         $request->expects($this->any())
             ->method('all')
             ->willReturn($userData);
@@ -73,51 +73,29 @@ class SiteTest extends TestCase
     public static function additionProvider(): array
     {
         return [
+            'GET request shows form' =>
             ['GET', [
-                'firstname' => '',
-                'lastname' => '',
-                'patronymic' => '',
-                'login' => '',
-                'password' => '',
-                'role_id' => '',
-                'academic_degree_id' => '',
-
+                'firstname' => '', 'lastname' => '', 'patronymic' => '',
+                'login' => '', 'password' => '', 'role_id' => '', 'academic_degree_id' => '',
             ], '<h1>Регистрация нового пользователя</h1>'],
 
+            'POST with empty firstname' =>
             ['POST', [
-                'firstname' => '',
-                'lastname' => '',
-                'patronymic' => '',
-                'login' => '',
-                'password' => '',
-                'role_id' => '',
-                'academic_degree_id' => '',
-            ],
-                'Поле firstname пусто',],
+                'firstname' => '', 'lastname' => '', 'patronymic' => '',
+                'login' => '', 'password' => '', 'role_id' => '', 'academic_degree_id' => '',
+            ], 'Поле firstname пусто'],
 
+            'POST with existing login' =>
             ['POST', [
-                'firstname' => 'Богдан',
-                'lastname' => 'Таран',
-                'patronymic' => 'Дмитриевич',
-                'login' => 'tabdm',
-                'password' => 'tabdm',
-                'role_id' => '2',
-                'academic_degree_id' => '2'
-            ],
-                'Поле login должно быть уникально',],
+                'firstname' => 'Богдан', 'lastname' => 'Таран', 'patronymic' => 'Дмитриевич',
+                'login' => 'tabdm', 'password' => 'tabdm', 'role_id' => '2', 'academic_degree_id' => '2'
+            ], 'Поле login должно быть уникально'],
 
+            'Successful registration' =>
             ['POST', [
-                'firstname' => 'Чебурашка',
-                'lastname' => 'Шапокляк',
-                'patronymic' => 'Геннадьевич',
-                'login' => md5(time()),
-                'password' => 'admin',
-                'role_id' => '2',
-                'academic_degree_id' => '2'
-            ],
-                // Для успешного кейса сообщение не нужно, так как мы проверяем пустоту результата
-                '',
-            ],
+                'firstname' => 'Чебурашка', 'lastname' => 'Шапокляк', 'patronymic' => 'Геннадьевич',
+                'login' => 'cheburashka_' . time(), 'password' => 'admin', 'role_id' => '2', 'academic_degree_id' => '2'
+            ], ''],
         ];
     }
 

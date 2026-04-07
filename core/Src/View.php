@@ -55,12 +55,12 @@ class View
             $content = ob_get_clean();
 
             //Возвращаем собранную страницу
-            //return require($this->getPathToMain());
+            return require($this->getPathToMain());
             //Включаем буферизацию для основного шаблона
-            ob_start();
+            /*ob_start();
             require($this->getPathToMain());
             //Возвращаем собранную страницу и очищаем буфер
-            return ob_get_clean();
+            return ob_get_clean();*/
         }
         throw new Exception('Error render');
     }

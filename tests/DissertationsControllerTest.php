@@ -6,6 +6,7 @@ use Model\Dissertations;
 use Model\DissertationFile;
 use Model\Student;
 use Src\Request;
+use Src\Route;
 
 class DissertationsControllerTest extends TestCase
 {
@@ -31,12 +32,11 @@ class DissertationsControllerTest extends TestCase
                 return $GLOBALS['app'];
             }
         }
-
     }
 
     public function testUploadDissertationFile()
     {
-        // Подготовка данных
+        // 1. Подготовка данных
         $this->student = Student::create([
             'firstname' => 'Тест',
             'lastname' => 'Тестов',
@@ -55,14 +55,17 @@ class DissertationsControllerTest extends TestCase
         ]);
 
         $fakeFileName = 'test_dissertation.pdf';
+        $FileName = 'check.pdf';
         $fakeTempPath = tempnam(sys_get_temp_dir(), 'upl');
-        file_put_contents($fakeTempPath, 'Это тестовый PDF файл.');
+        $TempPath = 'C:\Users\Администратор\Downloads\Чек-лист поступающего на бакалавриат 2026-2027.pdf';
+        file_put_contents($TempPath, 'Это тестовый PDF файл.');
 
         $_FILES['dissertation_file'] = [
-            'name' => $fakeFileName,
-            'tmp_name' => $fakeTempPath,
+//            'name' => $fakeFileName,
+            'name' => $FileName,
+            'tmp_name' => $TempPath,
             'error' => UPLOAD_ERR_OK,
-            'size' => filesize($fakeTempPath),
+            'size' => filesize($TempPath),
             'type' => 'application/pdf'
         ];
 
@@ -79,7 +82,6 @@ class DissertationsControllerTest extends TestCase
             ->onlyMethods(['moveUploadedFile']) // Указываем, какой метод будем заменять
             ->getMock();
 
-        // наш новый метод всегда должен возвращать true
         $controller->expects($this->once())
             ->method('moveUploadedFile')
             ->willReturn(true);
@@ -93,16 +95,15 @@ class DissertationsControllerTest extends TestCase
         // Проверка результатов
         $dissertationFile = DissertationFile::where('dissertation_id', $this->dissertation->dissertation_id)->first();
         $this->assertNotNull($dissertationFile, "Запись о файле не была создана в БД.");
-        $this->assertEquals($fakeFileName, $dissertationFile->file_name);
+        $this->assertEquals($FileName, $dissertationFile->file_name);
         $this->assertEquals('Файл успешно загружен!', $_SESSION['success_message']);
     }
 
-    protected function tearDown(): void
+    /*protected function tearDown(): void
     {
         if ($this->dissertation) {
             $dissertationFile = DissertationFile::where('dissertation_id', $this->dissertation->dissertation_id)->first();
             if ($dissertationFile) {
-                // Поскольку в этом тесте мы мокируем загрузку, реального файла не создается.
                 $dissertationFile->delete();
             }
             $this->dissertation->delete();
@@ -117,5 +118,5 @@ class DissertationsControllerTest extends TestCase
         }
 
         parent::tearDown();
-    }
+    }*/
 }
