@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Model\AcademicDegree;
@@ -18,6 +19,7 @@ class Site
     {
         $this->model = new User();
     }
+
     public function index(): string
     {
         $posts = Post::all();
@@ -71,6 +73,7 @@ class Site
 
     public function signup(Request $request): string
     {
+        $academic_degrees = AcademicDegree::all();
         if ($request->method === 'POST') {
 
             $validator = new Validator($request->all(), [
@@ -84,12 +87,16 @@ class Site
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
             ]);
-            
-            if($validator->fails()){
-                return new View('site.signup', [
-                    'errors' => $validator->errors(),
-                    'message' => 'Ошибка валидации'
-                ]);
+
+            if ($validator->fails()) {
+                return (new View())->render('site.signup', array_merge(
+                    [
+                        'errors' => $validator->errors(),
+                        'message' => 'Ошибка валидации',
+                        'academic_degrees' => $academic_degrees
+                    ],
+                    $request->all()
+                ));
             }
             $data = $request->all();
             // Переименовываем ключ пароля для соответствия полю в БД
@@ -101,9 +108,9 @@ class Site
                 }
                 $_SESSION['success_message'] = 'Вы успешно зарегистрированы!';
                 app()->route->redirect('/login');
+                return '';
             }
         }
-        $academic_degrees = AcademicDegree::all();
 
         return (new View())->render('site.signup', [
             'academic_degrees' => $academic_degrees,
@@ -130,7 +137,6 @@ class Site
             'students' => $students
         ]);
     }
-
 
 
     public function redirectToHello(): void
