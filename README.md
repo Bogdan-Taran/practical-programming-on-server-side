@@ -10,3 +10,6 @@ ob_start();
 require($this->getPathToMain());
 return ob_get_clean();
 ```
+```bash
+composer install
+```
