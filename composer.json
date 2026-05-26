@@ -21,7 +21,7 @@
         "illuminate/events": "12.x-dev",
         "nikic/fast-route": "^2.0@dev",
         "bogdan-taran/collect": "dev-master",
-        "pop-it-mvc/validator": "dev-fifth-task-unit-tests"
+        "pop-it-mvc/validator": "dev-sixth_task_api"
     },
     "autoload": {
       "psr-4": {
