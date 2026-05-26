@@ -81,6 +81,11 @@ class Route
         $uri = rawurldecode($uri);
         $uri = substr($uri, strlen($this->prefix));
 
+        // Удаление лишнего слэша в конце пути
+        if ($uri !== '/' && str_ends_with($uri, '/')) {
+            $uri = substr($uri, 0, -1);
+        }
+
         $dispatcher = new Dispatcher($this->routeCollector->getData());
 
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);

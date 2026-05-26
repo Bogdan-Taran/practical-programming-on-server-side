@@ -5,8 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/style_general.css">
-    <link rel="stylesheet" href="/css/style_admin_panel.css">
+    <link rel="stylesheet" href="css/style_general.css">
+    <link rel="stylesheet" href="css/style_admin_panel.css">
     <title>Decan</title>
 </head>
 <body>
